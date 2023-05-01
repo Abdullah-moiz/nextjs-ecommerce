@@ -9,16 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "autoprefixer": "10.4.14",
+    "daisyui": "^2.51.6",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.2",
+    "mongoose": "^7.1.0",
     "next": "13.3.2",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
+    "react-loader-spinner": "^5.3.4",
+    "react-redux": "^8.0.5",
+    "react-toastify": "^9.1.2",
+    "swr": "^2.1.5",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
   }
