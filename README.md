@@ -9,20 +9,34 @@
 
 ## Features
 
-- SignIn / SignUp
-- Forget Password
-- Post A Job
-- View  All Jobs
-- View Details of Any Job
-- BookMark Jobs
-- Track Your BookMark Jobs in DataTable View
-- Track Your Applied Jobs in DataTable View 
-- Track Your Posted Jobs and view Submitted Application 
-- Accept and Reject Different Application 
-- Status Updated for applied Job based on Job poster action 
-- JWT validation on each Authorized Request 
-#### ( Below Feature is works only in Local Environment as Vercel Don't allow write operation in free plan so CV are unable to saved but works fine in local App ) 
-- View or download Applicant CV's 
+
+
+#### multi User Login System
+- SignIn / SignUp (TODO)
+- Forget Password (TODO)
+- JWT validation on each Authorized Request (TODO)
+- Authorization validation for Admin Access and Customer Access (TODO)
+
+# ADMIN PANEL
+ - Add a product (TODO)
+ - Delete a Product (TODO)
+ - update product (TODO)
+ - Add a Category (TODO)
+ - update Category (TODO)
+ - Delete category (TODO)
+ - Handle Order Delivery  (TODO)
+
+# Customer
+- View Product & Category (TODO)
+- Add product to cart (TODO)
+- Increase Decrease cart Item  Quantity (TODO)
+- Bookmark favourite Product (TODO)
+- remove product from bookmark (TODO)
+- Order a Product (TODO)
+- track Order Status (TODO)
+
+#### Note 
+More Functionality will be added with time
 
 
 
