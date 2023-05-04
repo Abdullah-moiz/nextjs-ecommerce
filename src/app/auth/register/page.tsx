@@ -8,6 +8,7 @@ import { register_me } from '@/Services/auth';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Navbar from '@/components/Navbar';
+import { TailSpin } from 'react-loader-spinner';
 
 
 export default function  Register (){
@@ -26,10 +27,12 @@ export default function  Register (){
   
   const [formData, setFormData] = useState({ email: "", password: "" , name : "" });
   const [error, setError] = useState({ email: "", password: "", name: '' });
+  const [loading , setLoding] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 
     event.preventDefault();
+    setLoding(true);
     if (!formData.email) {
       setError({ ...error, email: "Email Field is Required" })
       return;
@@ -45,12 +48,14 @@ export default function  Register (){
 
     const data = await register_me(formData);
     if (data.success) {
+      setLoding(false);
       toast.success(data.message);
       setTimeout(() => {
         router.push('/auth/login');
       }, 2000);
     }
     else {
+      setLoding(false);
       toast.error(data.message);
     }
   }
@@ -90,7 +95,22 @@ export default function  Register (){
                 }
               </div>
 
-              <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign Up</button>
+              {
+                                    loading ? <button type="button" className="w-full flex items-center justify-center text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
+                                        <TailSpin
+                                            height="20"
+                                            width="20"
+                                            color="white"
+                                            ariaLabel="tail-spin-loading"
+                                            radius="1"
+                                            wrapperStyle={{}}
+                                            wrapperClass=""
+                                            visible={true}
+                                        />
+                                        </button> : <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">Sign up</button>
+                                }
+
+              
               <p className="text-sm  text-gray-500 ">
                 Already have an account  <Link href="/auth/login" className="font-medium text-orange-600 hover:underline ">Sign In</Link>
               </p>

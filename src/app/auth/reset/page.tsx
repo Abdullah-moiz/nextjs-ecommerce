@@ -3,15 +3,17 @@
 import Navbar from '@/components/Navbar';
 import { forget_password } from '@/Services/auth';
 import { useRouter } from 'next/navigation';
-import React, { useState   , FormEvent} from 'react'
+import React, { useState, FormEvent } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { TailSpin } from 'react-loader-spinner';
 
 export default function ForgetPassword() {
   const Router = useRouter();
 
   const [formData, setFormData] = useState({ email: "", password: "", confirmPassword: "" });
   const [error, setError] = useState({ email: "", password: "", confirmPassword: "" });
+  const [loading, setLoding] = useState(false);
 
 
 
@@ -19,8 +21,9 @@ export default function ForgetPassword() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 
     event.preventDefault();
+    setLoding(true);
 
-    
+
     if (!formData.email) {
       setError({ ...error, email: "Email Field is Required" })
       return;
@@ -40,12 +43,14 @@ export default function ForgetPassword() {
 
     const res = await forget_password(formData);
     if (res.success) {
+      setLoding(false);
       toast.success(res.message);
       setTimeout(() => {
         Router.push('/auth/login')
       }, 1000);
     }
     else {
+      setLoding(false);
       toast.error(res.message);
     }
   }
@@ -63,26 +68,40 @@ export default function ForgetPassword() {
             <form onSubmit={handleSubmit} className="mt-4 space-y-4 lg:mt-5 md:space-y-5" >
               <div className='text-left'>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
-                <input onChange={(e) => setFormData({ ...formData, email: e.target.value })} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 " placeholder="name@company.com"  />
+                <input onChange={(e) => setFormData({ ...formData, email: e.target.value })} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 " placeholder="name@company.com" />
                 {
                   error.email && <p className="text-sm text-red-500">{error.email}</p>
                 }
               </div>
               <div className='text-left'>
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">New Password</label>
-                <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 "  />
+                <input onChange={(e) => setFormData({ ...formData, password: e.target.value })} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 " />
                 {
                   error.password && <p className="text-sm text-red-500">{error.password}</p>
                 }
               </div>
               <div className='text-left'>
                 <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 ">Confirm password</label>
-                <input onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 "  />
+                <input onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 " />
                 {
                   error.confirmPassword && <p className="text-sm text-red-500">{error.confirmPassword}</p>
                 }
               </div>
-              <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Reset passwod</button>
+              {
+                loading ? <button type="button" className="w-full flex items-center justify-center text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">
+                  <TailSpin
+                    height="20"
+                    width="20"
+                    color="white"
+                    ariaLabel="tail-spin-loading"
+                    radius="1"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                  />
+                </button> : <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800">Reset</button>
+              }
+
             </form>
           </div>
         </div>
