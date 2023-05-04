@@ -17,7 +17,7 @@
 - SignIn / SignUp ✔
 - Forget Password ✔
 - JWT validation on each Authorized Request (TODO)
-- Authorization validation for Admin Access and Customer Access (TODO)
+- Authorization validation for Admin Access and Customer Access ✔
 
 # ADMIN PANEL
  - Add a product (TODO)
