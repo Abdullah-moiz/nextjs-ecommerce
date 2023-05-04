@@ -11,7 +11,7 @@ import { GrCompliance } from 'react-icons/gr'
 
 export default function AdminSidebar() {
     return (
-        <div className='w-60 bg-white h-full'>
+        <div className='w-60 hidden md:block bg-white h-full'>
             <div className='w-full text-center py-2 px-2 h-20'>
                 <h1 className='flex text-2xl font-semibold items-center justify-center'><RxDashboard className='mx-2' /> Dashboard</h1>
             </div>
