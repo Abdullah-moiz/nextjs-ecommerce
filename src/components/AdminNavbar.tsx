@@ -21,8 +21,8 @@ export default function AdminNavbar() {
                     <li><Link href={'/'}>Homepage</Link></li>
                         <li><Link href={''}>Categories</Link></li>
                         <li><Link href={''}>Products</Link></li>
-                        <li><Link href={''}>Add Products</Link></li>
-                        <li><Link href={''}>Add Category</Link></li>
+                        <li><Link href={'/product/add-product'}>Add Products</Link></li>
+                        <li><Link href={'/category/add-category'}>Add Category</Link></li>
                         <li><Link href={''}>Pending orders</Link></li>
                         <li><Link href={''}>Completed orders</Link></li>
                     </ul>

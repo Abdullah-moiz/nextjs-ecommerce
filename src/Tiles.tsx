@@ -31,6 +31,12 @@ const data = [
     "title": "Completed Orders",
     "count": 100
   },
+  {
+    "icon": "TfiStatsUp",
+    "color": "text-orange-600",
+    "title": "Month Statistics",
+    "count": +100
+  },
 
 
 
