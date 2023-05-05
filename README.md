@@ -16,14 +16,14 @@
 #### multi User Login System
 - SignIn / SignUp ✔
 - Forget Password ✔
-- JWT validation on each Authorized Request (TODO)
+- JWT validation on each Authorized Request ✔
 - Authorization validation for Admin Access and Customer Access ✔
 
 # ADMIN PANEL
- - Add a product (TODO)
+ - Add a product ✔
  - Delete a Product (TODO)
  - update product (TODO)
- - Add a Category (TODO)
+ - Add a Category ✔
  - update Category (TODO)
  - Delete category (TODO)
  - Handle Order Delivery  (TODO)
@@ -72,4 +72,15 @@ Install my-project with npm
   npm run build (for Production)
   npm run preview (To View Production Server )
 ```
+
+### Screen shots
+####  Admin Dashboard
+![1](https://user-images.githubusercontent.com/90745903/236361005-89f40e51-3aff-4e66-8aa2-941138a15316.png)
+
+#### Admin Add Product
+![3](https://user-images.githubusercontent.com/90745903/236361013-9216664c-f29b-489b-97b2-c82d5c3bcdfb.png)
+
+#### Admin Add Category
+![image](https://user-images.githubusercontent.com/90745903/236360988-8b7e6307-5365-4486-8404-b8ddaf1ab486.png)
+
     
