@@ -17,9 +17,10 @@ interface userData {
 
 export default function Dashboard() {
   const Router = useRouter();
-  const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
-
+  
   useEffect(() => {
+    const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log(user)
     if(!Cookies.get('token') ||  user?.role !== 'admin'){
       Router.push('/')
     }
