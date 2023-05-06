@@ -76,6 +76,7 @@ export default function AddCategory() {
         const uploadImageToFirebase = await uploadImages(data.image[0]);
         
         const finalData =  {categoryName : data.name , categoryDescription : data.description , categoryImage : uploadImageToFirebase , categorySlug : data.slug}
+        console.log(finalData)
 
         const res =  await add_new_category(finalData)
         if(res.success) {

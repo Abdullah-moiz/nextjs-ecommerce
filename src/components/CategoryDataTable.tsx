@@ -1,6 +1,6 @@
 "use Client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import {mutate} from 'swr'
 import { toast } from 'react-toastify';
@@ -24,8 +24,14 @@ type CategoryData = {
 
 
 export default function CategoryDataTable() {
+  const [catData , setCatData] = useState<CategoryData[] | null>(null);
   const { data, isLoading } = useSWR('/gettingAllCategoriesFOrAdmin', get_all_categories)
   if (data?.success  !== true) toast.error(data?.message)
+
+
+  useEffect(() => {
+    setCatData(data?.data)
+  },[data])
 
 
   
@@ -73,10 +79,10 @@ export default function CategoryDataTable() {
     <>
       <DataTable
                 columns={columns}
-                data={data}
-                key={data?._id}
+                data={catData || []}
+                key={'ThisisCategoryData'}
                 pagination
-                title={`Total Categories : ${data?.length}`}
+                title={`Categories list`}
                 fixedHeader
                 fixedHeaderScrollHeight='100%'
                 selectableRows

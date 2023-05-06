@@ -11,7 +11,7 @@ export async function GET(req: Request) {
     if (isAuthenticated) {
       const getData = await Category.find({});
       if (getData) {
-        return NextResponse.json(getData,{ status : 200 });
+        return NextResponse.json({success  :true , data : getData});
       } else {
         return NextResponse.json({status: 204 , success: false, message: 'No categories found.' });
       }

@@ -9,8 +9,8 @@ export async function POST(req: Request) {
     const isAuthenticated = await AuthCheck(req);
 
     if (isAuthenticated === 'admin') {
-      const { body } = await req.json();
-      const saveData = await Category.create(body);
+      const data = await req.json();
+      const saveData = await Category.create(data);
 
       if (saveData) {
         return NextResponse.json({ success: true, message: "Category added successfully!" });
