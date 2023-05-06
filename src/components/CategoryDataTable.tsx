@@ -2,8 +2,9 @@
 
 import React from 'react'
 import useSWR from 'swr'
+import {mutate} from 'swr'
 import { toast } from 'react-toastify';
-import { get_all_categories } from '@/Services/Admin/category';
+import { delete_a_category, get_all_categories } from '@/Services/Admin/category';
 import DataTable from 'react-data-table-component';
 import Image from 'next/image';
 import Loading from '@/app/loading';
@@ -23,7 +24,7 @@ type CategoryData = {
 
 
 export default function CategoryDataTable() {
-  const { data, isLoading } = useSWR('/api/admin/category', get_all_categories)
+  const { data, isLoading } = useSWR('/gettingAllCategoriesFOrAdmin', get_all_categories)
   if (data?.success  !== true) toast.error(data?.message)
 
 
@@ -55,8 +56,15 @@ export default function CategoryDataTable() {
 
 
 
-  const handleDeleteCategory = (id : string)  => {
-    console.log(id)
+  const handleDeleteCategory = async (id : string)  => {
+    const res  =  await delete_a_category(id);
+    if(res?.success){
+      toast.success(res?.message)
+      mutate('/gettingAllCategoriesFOrAdmin')
+    }
+    else{
+      toast.error(res?.message)
+    }
   }
 
 

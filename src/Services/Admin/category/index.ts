@@ -34,9 +34,9 @@ export const get_all_categories = async () => {
 }
 
 
-export const delete_a_category = async () => {
+export const delete_a_category = async (id:string) => {
   try {
-    const res = await fetch(`/api/Admin/category/delete-category`, {
+    const res = await fetch(`/api/Admin/category/delete-category?id=${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${Cookies.get('token')}`

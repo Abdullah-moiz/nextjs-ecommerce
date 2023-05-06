@@ -10,11 +10,12 @@ export async function DELETE(req: Request) {
     const isAuthenticated = await AuthCheck(req);
 
     if (isAuthenticated === 'admin') {
-      const data = await req.json()
+      const { searchParams } = new URL(req.url);
+      const id = searchParams.get('id');
 
 
 
-      const deleteData = await Category.find({});
+      const deleteData = await Category.findByIdAndDelete(id);
 
       if (deleteData) {
         return NextResponse.json({ success: true, message: "Category Deleted successfully!" });
