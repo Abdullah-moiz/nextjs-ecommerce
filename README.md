@@ -86,7 +86,8 @@ Install my-project with npm
 ![image](https://user-images.githubusercontent.com/90745903/236360988-8b7e6307-5365-4486-8404-b8ddaf1ab486.png)
 
 #### Admin View Category
-![image](https://user-images.githubusercontent.com/90745903/236598489-0dc2503a-4c93-441e-95c7-7d3645759c78.png)
+![image](https://user-images.githubusercontent.com/90745903/236636108-9600529e-9aa7-4aa0-949f-5a0699ae80bd.png)
+
 
 
     
