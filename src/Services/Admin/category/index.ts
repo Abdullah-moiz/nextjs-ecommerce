@@ -19,7 +19,7 @@ export const add_new_category = async (formData: any) => {
 
 export const get_all_categories = async () => {
   try {
-    const res = await fetch(`/api/Admin/category`, {
+    const res = await fetch(`/api/Admin/category/getCategory`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${Cookies.get('token')}`
