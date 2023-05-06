@@ -4,27 +4,34 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import AdminNavbar from '@/components/AdminNavbar';
 import AdminSidebar from '@/components/AdminSidebar';
-import StatsTiles from '@/components/StatsTiles';
-import data from '@/Tiles';
+import SuperComponent from '@/components/SuperComponent';
+import { ToastContainer } from 'react-toastify';
 
 
 interface userData {
-  email : String, 
-  role :String , 
+  email: String,
+  role: String,
   _id: String,
-  name : String
+  name: String
 }
+
+
 
 export default function Dashboard() {
   const Router = useRouter();
-  
+
   useEffect(() => {
     const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
-    console.log(user)
-    if(!Cookies.get('token') ||  user?.role !== 'admin'){
+    if (!Cookies.get('token') || user?.role !== 'admin') {
       Router.push('/')
     }
-  },[])
+  }, [])
+
+
+
+
+ 
+
 
   return (
     <div className='w-full h-screen flex  bg-base-200 overflow-hidden'>
@@ -32,19 +39,10 @@ export default function Dashboard() {
       <div className='w-full h-full '>
         <AdminNavbar />
         <div className='w-full h-5/6  flex flex-wrap items-start justify-center overflow-y-auto  px-4 py-2'>
-          {
-            data?.map((tile, index) => {
-              return (
-                <StatsTiles key={index}
-                  Icon={tile.icon}
-                  color={tile.color}
-                  title={tile.title}
-                  count={tile.count} />
-              )
-            })
-          }
+         <SuperComponent />
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

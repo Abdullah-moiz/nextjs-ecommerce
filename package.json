@@ -29,6 +29,7 @@
     "next": "13.3.2",
     "postcss": "8.4.23",
     "react": "18.2.0",
+    "react-data-table-component": "^7.5.3",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-icons": "^4.8.0",

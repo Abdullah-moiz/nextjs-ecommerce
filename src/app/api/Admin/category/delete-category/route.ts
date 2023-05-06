@@ -3,19 +3,24 @@ import AuthCheck from "@/middleware/AuthCheck";
 import { NextResponse } from "next/server";
 import Category from "@/model/Category";
 
-export async function POST(req: Request) {
+
+export async function DELETE(req: Request) {
   try {
     await connectDB();
     const isAuthenticated = await AuthCheck(req);
 
     if (isAuthenticated === 'admin') {
-      const { body } = await req.json();
-      const saveData = await Category.create(body);
+      const data = await req.json();
+      console.log('id:', data.id);
 
-      if (saveData) {
-        return NextResponse.json({ success: true, message: "Category added successfully!" });
+
+
+      const deleteData = await Category.findByIdAndDelete(id)
+
+      if (deleteData) {
+        return NextResponse.json({ success: true, message: "Category Deleted successfully!" });
       } else {
-        return NextResponse.json({ success: false, message: "Failed to add the category. Please try again!" });
+        return NextResponse.json({ success: false, message: "Failed to Delete the category. Please try again!" });
       }
     } else {
       return NextResponse.json({ success: false, message: "You are not authorized." });
