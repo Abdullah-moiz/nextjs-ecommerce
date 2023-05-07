@@ -5,7 +5,11 @@ import React, { useEffect } from 'react'
 import AdminNavbar from '@/components/AdminNavbar';
 import AdminSidebar from '@/components/AdminSidebar';
 import SuperComponent from '@/components/SuperComponent';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import useSWR from 'swr'
+import { get_all_categories } from '@/Services/Admin/category';
+import { useDispatch } from 'react-redux';
+import { setCatLoading, setCategoryData } from '@/utils/AdminSlice';
 
 
 interface userData {
@@ -19,7 +23,8 @@ interface userData {
 
 export default function Dashboard() {
   const Router = useRouter();
-
+  const dispatch  = useDispatch();
+  
   useEffect(() => {
     const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
     if (!Cookies.get('token') || user?.role !== 'admin') {
@@ -29,7 +34,14 @@ export default function Dashboard() {
 
 
 
+  const { data : categoryData , isLoading : categoryLoading } = useSWR('/gettingAllCategoriesFOrAdmin', get_all_categories)
+  if (categoryData?.success  !== true) toast.error(categoryData?.message)
 
+  useEffect(() => {
+   dispatch(setCategoryData(categoryData?.data))
+    dispatch(setCatLoading(categoryLoading))
+
+  }, [categoryData , dispatch , categoryLoading])
  
 
 
@@ -46,5 +58,7 @@ export default function Dashboard() {
     </div>
   )
 }
+
+
 
 

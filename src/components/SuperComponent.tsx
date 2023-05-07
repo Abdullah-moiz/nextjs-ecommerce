@@ -18,3 +18,5 @@ export default function SuperComponent() {
             return <TileContainer />;
     }
 }
+
+export const dynamic = 'force-dynamic'

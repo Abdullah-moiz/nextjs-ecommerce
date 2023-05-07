@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import StatsTiles from '@/components/StatsTiles';
-import data from '@/Tiles';
+import GettingDatasLength from '@/Tiles';
 
 interface tile {
     icon : string , color : string , title : string , count : number
   }
 
 export default function TileContainer() {
+  const [data , setData] =  useState(GettingDatasLength());
   return (
     <>
  {

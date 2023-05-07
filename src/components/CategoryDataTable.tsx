@@ -1,13 +1,15 @@
 "use Client"
 
 import React, { useEffect, useState } from 'react'
-import useSWR from 'swr'
+
 import {mutate} from 'swr'
 import { toast } from 'react-toastify';
-import { delete_a_category, get_all_categories } from '@/Services/Admin/category';
+import { delete_a_category } from '@/Services/Admin/category';
 import DataTable from 'react-data-table-component';
 import Image from 'next/image';
 import Loading from '@/app/loading';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/Store/store';
 
 
 
@@ -25,12 +27,13 @@ type CategoryData = {
 
 export default function CategoryDataTable() {
   const [catData , setCatData] = useState<CategoryData[] | null>(null);
-  const { data, isLoading } = useSWR('/gettingAllCategoriesFOrAdmin', get_all_categories)
-  if (data?.success  !== true) toast.error(data?.message)
+  const data =  useSelector((state : RootState) => state.Admin.category)
+  const isLoading  = useSelector((state : RootState) => state.Admin.catLoading);
+ 
 
 
   useEffect(() => {
-    setCatData(data?.data)
+    setCatData(data)
   },[data])
 
 
@@ -97,4 +100,3 @@ export default function CategoryDataTable() {
   )
 }
 
-export const dynamic = 'force-dynamic'
