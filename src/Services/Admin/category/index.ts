@@ -6,6 +6,7 @@ export const add_new_category = async (formData: any) => {
     const res = await fetch(`/api/Admin/category/add-category`, {
       method: 'POST',
       headers: {
+        dynamic : "force-dynamic",
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${Cookies.get('token')}`
       },
@@ -22,9 +23,7 @@ export const get_all_categories = async () => {
   try {
     const res = await fetch('/api/Admin/category/getCategory', {
       method: 'GET',
-      cache : 'no-cache',
       headers: {
-        dynamic : "force-dynamic",
         Authorization: `Bearer ${Cookies.get('token')}`,
       },
     });
@@ -42,6 +41,7 @@ export const get_category_by_id = async (id:string) => {
     const res = await fetch(`/api/Admin/category/get-category-by-id?id=${id}`, {
       method: 'GET',
       headers: {
+        dynamic : "force-dynamic",
         'Authorization': `Bearer ${Cookies.get('token')}`
       },
     })
