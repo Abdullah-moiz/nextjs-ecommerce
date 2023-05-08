@@ -11,6 +11,7 @@ import { get_all_categories } from '@/Services/Admin/category';
 import { useDispatch } from 'react-redux';
 import { setCatLoading, setCategoryData } from '@/utils/AdminSlice';
 import Loading from '../loading';
+import { setNavActive } from '@/utils/AdminNavSlice';
 
 
 interface userData {
@@ -31,6 +32,7 @@ export default function Dashboard() {
     if (!Cookies.get('token') || user?.role !== 'admin') {
       Router.push('/')
     }
+    dispatch(setNavActive('Base'))
   }, [])
 
 

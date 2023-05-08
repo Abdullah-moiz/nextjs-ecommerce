@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StatsTiles from '@/components/StatsTiles';
-import GettingDatasLength from '@/Tiles';
+import GettingDatasLength from '@/app/tilesDatas/Tiles';
 
 interface tile {
     icon : string , color : string , title : string , count : number

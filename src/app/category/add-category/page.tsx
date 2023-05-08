@@ -27,22 +27,22 @@ interface loaderType {
 
 const add_new_category = async (formData: any) => {
     try {
-      const res = await fetch(`/api/Admin/category/add-category`, {
-        method: 'POST',
-        headers: {
-          dynamic : "force-dynamic",
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${Cookies.get('token')}`
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      return data;
+        const res = await fetch(`/api/Admin/category/add-category`, {
+            method: 'POST',
+            headers: {
+                dynamic: dynamic,
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+            body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        return data;
     } catch (error) {
-      console.log('Error in Add New Category (service) =>', error);
+        console.log('Error in Add New Category (service) =>', error);
     }
-  }
-  
+}
+
 
 
 const uploadImages = async (file: File) => {
@@ -83,7 +83,7 @@ const maxSize = (value: File) => {
 export default function AddCategory() {
 
     const [loader, setLoader] = useState(false)
-    const Router =  useRouter();
+    const Router = useRouter();
 
 
     const { register, formState: { errors }, handleSubmit } = useForm<Inputs>({
@@ -95,18 +95,18 @@ export default function AddCategory() {
         const CheckFileSize = maxSize(data.image[0]);
         if (CheckFileSize) return toast.error('Image size must be less then 1MB')
         const uploadImageToFirebase = await uploadImages(data.image[0]);
-        
-        const finalData =  {categoryName : data.name , categoryDescription : data.description , categoryImage : uploadImageToFirebase , categorySlug : data.slug}
+
+        const finalData = { categoryName: data.name, categoryDescription: data.description, categoryImage: uploadImageToFirebase, categorySlug: data.slug }
         console.log(finalData)
 
-        const res =  await add_new_category(finalData)
-        if(res.success) {
+        const res = await add_new_category(finalData)
+        if (res.success) {
             toast.success(res?.message);
             setTimeout(() => {
                 Router.push('/Dashboard')
             }, 2000);
             setLoader(false)
-        }else{
+        } else {
             toast.error(res?.message)
             setLoader(false)
         }

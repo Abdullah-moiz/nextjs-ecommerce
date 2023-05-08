@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import useSWR from 'swr'
 import Image from 'next/image';
 import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { setNavActive } from '@/utils/AdminNavSlice';
 
 
 type Inputs = {
@@ -32,12 +34,13 @@ type CategoryData = {
 
 
 
+export const dynamic = 'force-dynamic'
  const get_category_by_id = async (id:string) => {
     try {
       const res = await fetch(`/api/Admin/category/get-category-by-id?id=${id}`, {
         method: 'GET',
         headers: {
-          dynamic : "force-dynamic",
+            dyanmic: dynamic,
           'Authorization': `Bearer ${Cookies.get('token')}`
         },
       })
@@ -67,6 +70,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
 
     const [loader, setLoader] = useState(false)
     const Router = useRouter();
+    const dispatch = useDispatch();
     const [catData, setCatData] = useState<CategoryData | undefined>(undefined);
 
 
@@ -110,8 +114,9 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
         console.log(res)
         if (res?.success) {
             toast.success(res?.message);
+            dispatch(setNavActive('Base'))
             setTimeout(() => {
-                Router.push('/Dashboard')
+                Router.push("/Dashboard")
             }, 2000);
             setLoader(false)
         } else {
@@ -130,7 +135,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
         <div className='w-full p-4 min-h-screen  bg-base-200 flex flex-col '>
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul>
-                    <li>
+                    <li onClick={() => dispatch(setNavActive('Base')) }>
                         <Link href={'/Dashboard'}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                             Home
@@ -214,4 +219,3 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
 }
 
 
-export const dynamic = 'force-dynamic'
