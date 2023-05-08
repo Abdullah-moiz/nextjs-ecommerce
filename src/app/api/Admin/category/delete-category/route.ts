@@ -26,7 +26,7 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ success: false, message: "You are not authorized." });
     }
   } catch (error) {
-    console.log('Error in adding a new category:', error);
+    console.log('Error in deleting a new category:', error);
     return NextResponse.json({ success: false, message: 'Something went wrong. Please try again!' });
   }
 }

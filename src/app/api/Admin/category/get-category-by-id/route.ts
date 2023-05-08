@@ -22,7 +22,7 @@ export async function GET(req: Request) {
       return NextResponse.json({status: 401 , success: false, message: "You are not authorized." });
     }
   } catch (error) {
-    console.log('Error in getting all categories:', error);
+    console.log('Error in getting  categories by id:', error);
     return NextResponse.json({status : 500 , success: false, message: 'Something went wrong. Please try again!' });
   }
 }
