@@ -20,13 +20,15 @@ export const add_new_category = async (formData: any) => {
 
 export const get_all_categories = async () => {
   try {
-    const res = await fetch(`/api/Admin/category/getCategory`, {
+    const res = await fetch('/api/Admin/category/getCategory', {
       method: 'GET',
+      cache : 'no-cache',
       headers: {
-        'Authorization': `Bearer ${Cookies.get('token')}`
+        dynamic : "force-dynamic",
+        Authorization: `Bearer ${Cookies.get('token')}`,
       },
-    })
-
+    });
+    console.log(res)
     const data = await res.json();
     return data;
   } catch (error) {
