@@ -7,8 +7,9 @@ import { storage } from '@/utils/Firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { ToastContainer, toast } from 'react-toastify';
 import { TailSpin } from 'react-loader-spinner';
-import { add_new_category } from '@/Services/Admin/category';
+
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 
 type Inputs = {
@@ -22,6 +23,26 @@ interface loaderType {
     loader: Boolean
 }
 
+
+
+const add_new_category = async (formData: any) => {
+    try {
+      const res = await fetch(`/api/Admin/category/add-category`, {
+        method: 'POST',
+        headers: {
+          dynamic : "force-dynamic",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${Cookies.get('token')}`
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.log('Error in Add New Category (service) =>', error);
+    }
+  }
+  
 
 
 const uploadImages = async (file: File) => {

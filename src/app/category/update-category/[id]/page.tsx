@@ -5,10 +5,11 @@ import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import { TailSpin } from 'react-loader-spinner';
-import { get_category_by_id, update_a_category } from '@/Services/Admin/category';
+import {  update_a_category } from '@/Services/Admin/category';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr'
 import Image from 'next/image';
+import Cookies from 'js-cookie';
 
 
 type Inputs = {
@@ -31,7 +32,23 @@ type CategoryData = {
 
 
 
-
+ const get_category_by_id = async (id:string) => {
+    try {
+      const res = await fetch(`/api/Admin/category/get-category-by-id?id=${id}`, {
+        method: 'GET',
+        headers: {
+          dynamic : "force-dynamic",
+          'Authorization': `Bearer ${Cookies.get('token')}`
+        },
+      })
+  
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.log('Error in getting Categories by ID (service) =>', error)
+    }
+  }
+  
 
 
 
