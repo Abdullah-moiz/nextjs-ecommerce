@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Loading from '@/app/loading';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/Store/store';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -26,6 +27,7 @@ type CategoryData = {
 
 
 export default function CategoryDataTable() {
+  const router =  useRouter();
   const [catData , setCatData] = useState<CategoryData[] | null>(null);
   const data =  useSelector((state : RootState) => state.Admin.category)
   const isLoading  = useSelector((state : RootState) => state.Admin.catLoading);
@@ -55,7 +57,7 @@ export default function CategoryDataTable() {
       name: 'Action',
       cell: (row: CategoryData) => (
           <div className='flex items-center justify-start px-2 h-20'>
-              <button onClick={() => console.log('hello')} className=' w-20 py-2 mx-2 text-xs text-green-600 hover:text-white my-2 hover:bg-green-600 border border-green-600 rounded transition-all duration-700'>Update</button>
+              <button onClick={() => router.push(`/category/update-category/${row?._id}`)} className=' w-20 py-2 mx-2 text-xs text-green-600 hover:text-white my-2 hover:bg-green-600 border border-green-600 rounded transition-all duration-700'>Update</button>
               <button onClick={() => handleDeleteCategory(row?._id)} className=' w-20 py-2 mx-2 text-xs text-red-600 hover:text-white my-2 hover:bg-red-600 border border-red-600 rounded transition-all duration-700'>Delete</button>
           </div>
       )

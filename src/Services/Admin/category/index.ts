@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+export const dynamic  =  'force-dynamic';
 
 export const add_new_category = async (formData: any) => {
   try {
@@ -34,6 +35,22 @@ export const get_all_categories = async () => {
 }
 
 
+export const get_category_by_id = async (id:string) => {
+  try {
+    const res = await fetch(`/api/Admin/category/get-category-by-id?id=${id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${Cookies.get('token')}`
+      },
+    })
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log('Error in getting Categories by ID (service) =>', error)
+  }
+}
+
 export const delete_a_category = async (id:string) => {
   try {
     const res = await fetch(`/api/Admin/category/delete-category?id=${id}`, {
@@ -49,3 +66,25 @@ export const delete_a_category = async (id:string) => {
     console.log('Error in deleting Categories (service) =>', error)
   }
 }
+
+
+export const update_a_category = async (formData : any) => {
+  try {
+    const res = await fetch(`/api/Admin/category/update-category`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${Cookies.get('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    })
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log('Error in deleting Categories (service) =>', error)
+  }
+}
+
+
+

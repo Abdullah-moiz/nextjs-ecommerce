@@ -10,6 +10,7 @@ import useSWR from 'swr'
 import { get_all_categories } from '@/Services/Admin/category';
 import { useDispatch } from 'react-redux';
 import { setCatLoading, setCategoryData } from '@/utils/AdminSlice';
+import Loading from '../loading';
 
 
 interface userData {
@@ -38,9 +39,9 @@ export default function Dashboard() {
   if (categoryData?.success  !== true) toast.error(categoryData?.message)
 
   useEffect(() => {
+    console.log(categoryData?.data)
    dispatch(setCategoryData(categoryData?.data))
     dispatch(setCatLoading(categoryLoading))
-
   }, [categoryData , dispatch , categoryLoading])
  
 
@@ -51,7 +52,7 @@ export default function Dashboard() {
       <div className='w-full h-full '>
         <AdminNavbar />
         <div className='w-full h-5/6  flex flex-wrap items-start justify-center overflow-y-auto  px-4 py-2'>
-         <SuperComponent />
+          {categoryLoading ? <Loading />: <SuperComponent />}
         </div>
       </div>
       <ToastContainer />
