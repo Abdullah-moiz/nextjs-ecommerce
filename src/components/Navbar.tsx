@@ -27,8 +27,8 @@ export default function Navbar() {
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li><Link href={'/'}>Homepage</Link></li>
-                        <li><Link href={''}>Shop</Link></li>
-                        <li><Link href={''}>About</Link></li>
+                        <li><Link href={'/'}>Shop</Link></li>
+                        <li><Link href={'/Dashboard'}>Dashboard</Link></li>
                     </ul>
                 </div>
             </div>

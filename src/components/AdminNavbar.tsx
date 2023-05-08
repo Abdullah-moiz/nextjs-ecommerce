@@ -28,8 +28,8 @@ export default function AdminNavbar() {
                         <li onClick={() => dispatch(setNavActive('activeProducts'))}><button >Products</button></li>
                         <li ><Link href={'/product/add-product'}>Add Products</Link></li>
                         <li><Link href={'/category/add-category'}>Add Category</Link></li>
-                        <li><Link href={''}>Pending orders</Link></li>
-                        <li><Link href={''}>Completed orders</Link></li>
+                        <li><Link href={"/Dashboard"}>Pending orders</Link></li>
+                        <li><Link href={"/Dashboard"}>Completed orders</Link></li>
                     </ul>
                 </div>
             </div>
@@ -42,12 +42,12 @@ export default function AdminNavbar() {
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li>
-                            <Link href={''} className="justify-between">
+                            <Link href={"/Dashboard"} className="justify-between">
                                 Profile
                                 <span className="badge">New</span>
                             </Link>
                         </li>
-                        <li onClick={handleLogout}><Link href={''}>Logout</Link></li>
+                        <li onClick={handleLogout}><Link href={"/Dashboard"}>Logout</Link></li>
 
                     </ul>
                 </div>
