@@ -1,10 +1,12 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { NextResponse } from "next/server";
+
+
+export const dynamic  = 'force-dynamic'
 
 const AuthCheck = async (req: Request) => {
     const token = req.headers.get("Authorization")?.split(" ")[1];
     if (!token) {
-      return NextResponse.json({ message: "You are not authorized" });
+      return false;
     }
     try {
       const decoded = await jwt.verify(token, process.env.JWT_SECREAT ?? 'default_secret_dumbScret') as JwtPayload;
