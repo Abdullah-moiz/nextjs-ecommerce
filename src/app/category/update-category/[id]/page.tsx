@@ -195,3 +195,6 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
         </div >
     )
 }
+
+
+export const dynamic = 'force-dynamic'

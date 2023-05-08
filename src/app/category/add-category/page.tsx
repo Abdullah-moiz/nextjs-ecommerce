@@ -178,3 +178,5 @@ export default function AddCategory() {
         </div >
     )
 }
+
+export const dynamic = 'force-dynamic';

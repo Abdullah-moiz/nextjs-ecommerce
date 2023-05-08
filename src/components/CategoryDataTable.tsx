@@ -102,3 +102,4 @@ export default function CategoryDataTable() {
   )
 }
 
+export const dynamic = 'force-dynamic'
