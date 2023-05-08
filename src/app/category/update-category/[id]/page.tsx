@@ -55,11 +55,6 @@ export const dynamic = 'force-dynamic'
 
 
 
-const maxSize = (value: File) => {
-    const fileSize = value.size / 1024 / 1024;
-    return fileSize < 1 ? false : true
-}
-
 
 interface pageParam {
     id: string

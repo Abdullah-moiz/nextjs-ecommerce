@@ -8,6 +8,8 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 
+    if(!id) return NextResponse.json({status: 400 , success: false, message: 'Please provide category id.' });
+
     await connectDB();
     const isAuthenticated = await AuthCheck(req);
 
