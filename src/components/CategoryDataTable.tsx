@@ -87,15 +87,16 @@ export default function CategoryDataTable() {
                 data={catData || []}
                 key={'ThisisCategoryData'}
                 pagination
+                keyField="id"
                 title={`Categories list`}
                 fixedHeader
-                fixedHeaderScrollHeight='100%'
+                fixedHeaderScrollHeight='600px'
                 selectableRows
                 selectableRowsHighlight
                 persistTableHead
                 progressPending={isLoading}
                 progressComponent={<Loading />}
-                className="bg-white px-4"
+                className="bg-white px-4 h-4/5 "
             />
 
     </>

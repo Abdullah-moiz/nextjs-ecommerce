@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import { TailSpin } from 'react-loader-spinner';
-import {  update_a_category } from '@/Services/Admin/category';
+import {  get_category_by_id, update_a_category } from '@/Services/Admin/category';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr'
 import Image from 'next/image';
@@ -34,23 +34,7 @@ type CategoryData = {
 
 
 
-export const dynamic = 'force-dynamic'
- const get_category_by_id = async (id:string) => {
-    try {
-      const res = await fetch(`/api/Admin/category/get-category-by-id?id=${id}`, {
-        method: 'GET',
-        headers: {
-            dyanmic: dynamic,
-          'Authorization': `Bearer ${Cookies.get('token')}`
-        },
-      })
-  
-      const data = await res.json();
-      return data;
-    } catch (error) {
-      console.log('Error in getting Categories by ID (service) =>', error)
-    }
-  }
+
   
 
 
