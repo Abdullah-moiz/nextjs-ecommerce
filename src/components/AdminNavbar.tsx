@@ -1,18 +1,22 @@
+"use client"
+
 import { setNavActive} from '@/utils/AdminNavSlice'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
 export default function AdminNavbar() {
-
+    const router =  useRouter();
     const dispatch =  useDispatch();
 
 
     const handleLogout = () => {
-        Cookies.remove('token')
-        localStorage.removeItem('user')
+        Cookies.remove('token');
+        localStorage.clear();
+        router.push('/')
     }
 
     return (
@@ -47,8 +51,7 @@ export default function AdminNavbar() {
                                 <span className="badge">New</span>
                             </Link>
                         </li>
-                        <li onClick={handleLogout}><Link href={"/Dashboard"}>Logout</Link></li>
-
+                        <li onClick={handleLogout}><button> Logout </button></li>
                     </ul>
                 </div>
             </div>

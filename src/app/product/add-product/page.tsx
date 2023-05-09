@@ -1,13 +1,158 @@
+"use client"
+
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useForm, SubmitHandler } from "react-hook-form";
+import { storage } from '@/utils/Firebase'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { ToastContainer, toast } from 'react-toastify';
+import { TailSpin } from 'react-loader-spinner';
+import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/Store/store';
+import Cookies from 'js-cookie';
+import { useSWRConfig } from "swr"
+import { add_new_product } from '@/Services/Admin/product';
+ 
+
+
+
+type Inputs = {
+    name: string,
+    description: string,
+    slug: string,
+    feature : Boolean,
+    price : Number,
+    quantity :  Number,
+    categoryID : string,
+    image: Array<File>,
+}
+
+interface loaderType {
+    loader: Boolean
+}
+
+
+
+
+
+
+
+const uploadImages = async (file: File) => {
+    const createFileName = () => {
+        const timestamp = Date.now();
+        const randomString = Math.random().toString(36).substring(2, 8);
+        return `${file?.name}-${timestamp}-${randomString}`;
+    }
+
+    const fileName = createFileName();
+    const storageRef = ref(storage, `ecommerce/category/${fileName}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    return new Promise((resolve, reject) => {
+        uploadTask.on('state_changed', (snapshot) => {
+        }, (error) => {
+            console.log(error)
+            reject(error);
+        }, () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                resolve(downloadURL);
+            }).catch((error) => {
+                console.log(error)
+                reject(error);
+            });
+        });
+    });
+}
+
+
+
+const maxSize = (value: File) => {
+    const fileSize = value.size / 1024 / 1024;
+    return fileSize < 1 ? false : true
+}
+
+
+type CategoryData = {
+    _id: string;
+    categoryName: string;
+    categoryDescription: string;
+    categoryImage: string;
+    categorySlug: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+
+interface userData {
+    email: String,
+    role: String,
+    _id: String,
+    name: String
+  }
+  
+
 
 export default function AddProduct() {
+
+    const [loader, setLoader] = useState(false)
+    const Router = useRouter();
+    const { mutate } = useSWRConfig()
+    const category =  useSelector((state : RootState) => state.Admin.category) as CategoryData[] | undefined
+
+    useEffect(() => {
+        const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
+        if (!Cookies.get('token') || user?.role !== 'admin') {
+            Router.push('/')
+        }
+        
+    }, [ Cookies, Router])
+
+    console.log(category)
+
+
+    useEffect(() => {
+        mutate('/gettingAllCategoriesFOrAdmin')
+    } , [category])
+
+
+
+    const { register, formState: { errors }, handleSubmit } = useForm<Inputs>({
+        criteriaMode: "all"
+    });
+
+    const onSubmit: SubmitHandler<Inputs> = async data => {
+        setLoader(true)
+        const CheckFileSize = maxSize(data.image[0]);
+        if (CheckFileSize) return toast.error('Image size must be less then 1MB')
+        const uploadImageToFirebase = await uploadImages(data.image[0]);
+
+        const finalData = { categoryName: data.name, categoryDescription: data.description, categoryImage: uploadImageToFirebase, categorySlug: data.slug , productFeatured  : data.feature , productPrice : data.price , productQuantity : data.quantity , productCategory : data.categoryID}
+        console.log(finalData)
+        const res = await add_new_product(finalData)
+        if (res.success) {
+            toast.success(res?.message);
+            setTimeout(() => {
+                Router.push('/Dashboard')
+            }, 2000);
+            setLoader(false)
+        } else {
+            toast.error(res?.message)
+            setLoader(false)
+        }
+    }
+
+
+
+
+
+
     return (
-        <div className='w-full  p-4 min-h-screen bg-base-200 flex flex-col '>
-            <div className="text-sm breadcrumbs border-b-2 border-b-orange-600">
+        <div className='w-full p-4 min-h-screen  bg-base-200 flex flex-col '>
+            <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul>
                     <li>
-                        <Link href={'/Dashboard'}>
+                        <Link href={"/Dashboard"}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                             Home
                         </Link>
@@ -21,50 +166,104 @@ export default function AddProduct() {
             <div className='w-full h-20 my-2 text-center'>
                 <h1 className='text-2xl py-2 '>Add Product</h1>
             </div>
-            <div className='w-full h-full flex items-start justify-center'>
-                <form className="w-full max-w-lg  py-2 flex-col ">
-                    <select className="select  w-full ">
-                        <option disabled selected>Choose Product Category</option>
-                        <option>Game of Thrones</option>
-                        <option>Lost</option>
-                        <option>Breaking Bad</option>
-                        <option>Walking Dead</option>
-                    </select>
-                    <div className="form-control w-full mb-2">
-                        <label className="label">
-                            <span className="label-text">Product Name</span>
-                        </label>
-                        <input type="text" placeholder="Type here" className="input input-bordered w-full" />
+            {
+                loader ? (
+                    <div className='w-full  flex-col h-96 flex items-center justify-center '>
+                        <TailSpin
+                            height="50"
+                            width="50"
+                            color="orange"
+                            ariaLabel="tail-spin-loading"
+                            radius="1"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                        />
+                        <p className='text-sm mt-2 font-semibold text-orange-500'>Adding Product Hold Tight ....</p>
                     </div>
-                    <div className="form-control w-full mb-2">
-                        <label className="label">
-                            <span className="label-text">Product Slug</span>
-                        </label>
-                        <input type="text" placeholder="Type here" className="input input-bordered w-full" />
-                    </div>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Product Description</span>
-                        </label>
-                        <textarea className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
-                    </div>
-                    <div className="form-control my-2 bg-white border border-gray-200 rounded">
-                        <label className="cursor-pointer label">
-                            <span className="label-text">Featured Product</span>
-                            <input type="checkbox"  className="checkbox " />
-                        </label>
-                    </div>
-                    <div className="form-control w-full ">
-                        <label className="label">
-                            <span className="label-text">Add Product Image</span>
-                        </label>
-                        <input type="file" className="file-input file-input-bordered w-full " />
-                    </div>
-                    <button className='btn btn-block mt-3'>Done !</button>
+                ) : (
 
-                </form>
-            </div>
+                    <div className='w-full h-full flex items-start justify-center'>
+                        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg  py-2 flex-col ">
+                            <div className="form-control w-full max-w-full">
+                                <label className="label">
+                                    <span className="label-text">Choose Category</span>
+                                </label>
+                                <select value={''}  {...register("categoryID", { required: true })}  className="select select-bordered">
+                                    <option disabled selected>Pick  one category </option>
+                                    {
+                                        category?.map((item) => {
+                                            return (
+                                                <option key={item._id} value={item._id}>{item.categoryName}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                            <div className="form-control w-full mb-2">
+                                <label className="label">
+                                    <span className="label-text">Product Name</span>
+                                </label >
+                                <input {...register("name", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full" />
+                                {errors.name && <span className='text-red-500 text-xs mt-2'>This field is required</span>}
+                            </div >
+                            <div className="form-control w-full mb-2">
+                                <label className="label">
+                                    <span className="label-text">Product Slug</span>
+                                </label>
+                                <input  {...register("slug", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full" />
+                                {errors.slug && <span className='text-red-500 text-xs mt-2'>This field is required</span>}
 
-        </div>
+                            </div>
+                            <div className="form-control w-full mb-2">
+                                <label className="label">
+                                    <span className="label-text">Product Price</span>
+                                </label>
+                                <input  {...register("price", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full" />
+                                {errors.slug && <span className='text-red-500 text-xs mt-2'>This field is required</span>}
+
+                            </div>
+                            <div className="form-control w-full mb-2">
+                                <label className="label">
+                                    <span className="label-text">Product Quantity</span>
+                                </label>
+                                <input  {...register("quantity", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full" />
+                                {errors.slug && <span className='text-red-500 text-xs mt-2'>This field is required</span>}
+
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Product Description</span>
+                                </label>
+                                <textarea  {...register("description", { required: true })} className="textarea textarea-bordered h-24" placeholder="Description"></textarea>
+                                {errors.description && <span className='text-red-500 text-xs mt-2'>This field is required</span>}
+
+                            </div>
+                            <div className="form-control py-2">
+                                <label className="label cursor-pointer">
+                                    <span className="label-text">Remember me</span>
+                                    <input {...register("feature")} type="checkbox"  className="checkbox" />
+                                </label>
+                            </div>
+                            <div className="form-control w-full ">
+                                <label className="label">
+                                    <span className="label-text">Add product Image</span>
+                                </label>
+                                <input accept="image/*" max="1000000"  {...register("image", { required: true })} type="file" className="file-input file-input-bordered w-full " />
+                                {errors.image && <span className='text-red-500 text-xs mt-2'>This field is required and the image must be less than or equal to 1MB.</span>}
+
+                            </div>
+
+                            <button className='btn btn-block mt-3'>Done !</button>
+
+                        </form >
+                    </div >
+
+                )
+            }
+
+            <ToastContainer />
+        </div >
     )
 }
+

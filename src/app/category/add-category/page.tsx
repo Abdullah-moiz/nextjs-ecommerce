@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { storage } from '@/utils/Firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
@@ -9,6 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { TailSpin } from 'react-loader-spinner';
 import { useRouter } from 'next/navigation';
 import { add_new_category } from '@/Services/Admin/category';
+import Cookies from 'js-cookie';
+
 
 
 
@@ -64,10 +66,32 @@ const maxSize = (value: File) => {
 }
 
 
+
+interface userData {
+    email: String,
+    role: String,
+    _id: String,
+    name: String
+  }
+  
+
 export default function AddCategory() {
 
     const [loader, setLoader] = useState(false)
     const Router = useRouter();
+    
+
+
+    useEffect(() => {
+        const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
+        if (!Cookies.get('token') || user?.role !== 'admin') {
+            Router.push('/')
+        }
+        
+    }, [ Cookies, Router])
+
+
+    
 
 
     const { register, formState: { errors }, handleSubmit } = useForm<Inputs>({
@@ -81,7 +105,6 @@ export default function AddCategory() {
         const uploadImageToFirebase = await uploadImages(data.image[0]);
 
         const finalData = { categoryName: data.name, categoryDescription: data.description, categoryImage: uploadImageToFirebase, categorySlug: data.slug }
-        console.log(finalData)
 
         const res = await add_new_category(finalData)
         if (res.success) {

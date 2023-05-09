@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-import {mutate} from 'swr'
+import { useSWRConfig } from "swr"
 import { toast } from 'react-toastify';
 import { delete_a_category } from '@/Services/Admin/category';
 import DataTable from 'react-data-table-component';
@@ -27,6 +27,7 @@ type CategoryData = {
 
 
 export default function CategoryDataTable() {
+  const { mutate } = useSWRConfig()
   const router =  useRouter();
   const [catData , setCatData] = useState<CategoryData[] | null>(null);
   const data =  useSelector((state : RootState) => state.Admin.category)
