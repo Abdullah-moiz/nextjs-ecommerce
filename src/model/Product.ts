@@ -12,13 +12,13 @@ const ProductSchema = new mongoose.Schema({
     productFeatured : Boolean,
     productCategory: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
+        ref: 'Categories',
         required: true
     },
 
 },{timestamps : true});
 
-const Product = mongoose.models.Product  || mongoose.model('Product', ProductSchema);
+const Product = mongoose.models.Products  || mongoose.model('Products', ProductSchema);
 
 export default Product;
 

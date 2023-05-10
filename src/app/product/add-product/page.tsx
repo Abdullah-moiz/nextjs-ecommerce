@@ -108,7 +108,7 @@ export default function AddProduct() {
         
     }, [ Cookies, Router])
 
-    console.log(category)
+    
 
 
     useEffect(() => {
@@ -125,10 +125,10 @@ export default function AddProduct() {
         setLoader(true)
         const CheckFileSize = maxSize(data.image[0]);
         if (CheckFileSize) return toast.error('Image size must be less then 1MB')
-        const uploadImageToFirebase = await uploadImages(data.image[0]);
+        // const uploadImageToFirebase = await uploadImages(data.image[0]);
+        const uploadImageToFirebase = 'https://firebasestorage.googleapis.com/v0/b/socialapp-9b83f.appspot.com/o/ecommerce%2Fcategory%2Fimages131.jpg-1683339363348-c4vcab?alt=media&token=f9303ff9-7d34-4514-a53f-832f72814337';
 
-        const finalData = { categoryName: data.name, categoryDescription: data.description, categoryImage: uploadImageToFirebase, categorySlug: data.slug , productFeatured  : data.feature , productPrice : data.price , productQuantity : data.quantity , productCategory : data.categoryID}
-        console.log(finalData)
+        const finalData = { productName: data.name, productDescription: data.description, productImage: uploadImageToFirebase, productSlug: data.slug , productFeatured  : data.feature , productPrice : data.price , productQuantity : data.quantity , productCategory : data.categoryID}
         const res = await add_new_product(finalData)
         if (res.success) {
             toast.success(res?.message);
@@ -148,7 +148,7 @@ export default function AddProduct() {
 
 
     return (
-        <div className='w-full p-4 min-h-screen  bg-base-200 flex flex-col '>
+        <div className='w-full p-4 min-h-screen  bg-gray-50 flex flex-col '>
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul>
                     <li>
@@ -189,7 +189,7 @@ export default function AddProduct() {
                                 <label className="label">
                                     <span className="label-text">Choose Category</span>
                                 </label>
-                                <select value={''}  {...register("categoryID", { required: true })}  className="select select-bordered">
+                                <select   {...register("categoryID", { required: true })}  className="select select-bordered">
                                     <option disabled selected>Pick  one category </option>
                                     {
                                         category?.map((item) => {
@@ -219,7 +219,7 @@ export default function AddProduct() {
                                 <label className="label">
                                     <span className="label-text">Product Price</span>
                                 </label>
-                                <input  {...register("price", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full" />
+                                <input  {...register("price", { required: true })} type="number" placeholder="Type here" className="input input-bordered w-full" />
                                 {errors.slug && <span className='text-red-500 text-xs mt-2'>This field is required</span>}
 
                             </div>
@@ -227,7 +227,7 @@ export default function AddProduct() {
                                 <label className="label">
                                     <span className="label-text">Product Quantity</span>
                                 </label>
-                                <input  {...register("quantity", { required: true })} type="text" placeholder="Type here" className="input input-bordered w-full" />
+                                <input  {...register("quantity", { required: true })} type="number" placeholder="Type here" className="input input-bordered w-full" />
                                 {errors.slug && <span className='text-red-500 text-xs mt-2'>This field is required</span>}
 
                             </div>
@@ -241,7 +241,7 @@ export default function AddProduct() {
                             </div>
                             <div className="form-control py-2">
                                 <label className="label cursor-pointer">
-                                    <span className="label-text">Remember me</span>
+                                    <span className="label-text">Featured Product</span>
                                     <input {...register("feature")} type="checkbox"  className="checkbox" />
                                 </label>
                             </div>

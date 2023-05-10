@@ -9,9 +9,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import useSWR from 'swr'
 import { get_all_categories } from '@/Services/Admin/category';
 import { useDispatch } from 'react-redux';
-import { setCatLoading, setCategoryData } from '@/utils/AdminSlice';
+import { setCatLoading, setCategoryData, setProdLoading, setProductData } from '@/utils/AdminSlice';
 import Loading from '../loading';
 import { setNavActive } from '@/utils/AdminNavSlice';
+import { get_all_products } from '@/Services/Admin/product';
 
 
 interface userData {
@@ -25,36 +26,39 @@ interface userData {
 
 export default function Dashboard() {
   const Router = useRouter();
-  const dispatch  = useDispatch();
-  
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
     if (!Cookies.get('token') || user?.role !== 'admin') {
       Router.push('/')
     }
     dispatch(setNavActive('Base'))
-  }, [dispatch , Cookies , Router])
+  }, [dispatch, Cookies, Router])
 
 
 
-  const { data : categoryData , isLoading : categoryLoading } = useSWR('/gettingAllCategoriesFOrAdmin', get_all_categories)
-  if (categoryData?.success  !== true) toast.error(categoryData?.message)
+  const { data: categoryData, isLoading: categoryLoading } = useSWR('/gettingAllCategoriesFOrAdmin', get_all_categories)
+  if (categoryData?.success !== true) toast.error(categoryData?.message)
+  const { data: productData, isLoading: productLoading } = useSWR('/gettingAllProductsFOrAdmin', get_all_products)
+  if (productData?.success !== true) toast.error(productData?.message)
 
   useEffect(() => {
-    console.log(categoryData?.data)
-   dispatch(setCategoryData(categoryData?.data))
+    dispatch(setCategoryData(categoryData?.data))
     dispatch(setCatLoading(categoryLoading))
-  }, [categoryData , dispatch , categoryLoading])
- 
+    dispatch(setProductData(productData?.data))
+    dispatch(setProdLoading(productLoading))
+  }, [categoryData, dispatch, categoryLoading , productData , productLoading])
+
 
 
   return (
-    <div className='w-full h-screen flex  bg-base-200 overflow-hidden'>
+    <div className='w-full h-screen flex  bg-gray-50 overflow-hidden'>
       <AdminSidebar />
       <div className='w-full h-full '>
         <AdminNavbar />
         <div className='w-full h-5/6  flex flex-wrap items-start justify-center overflow-y-auto  px-4 py-2'>
-          {categoryLoading ? <Loading />: <SuperComponent />}
+          {categoryLoading || productLoading ? <Loading /> : <SuperComponent />}
         </div>
       </div>
       <ToastContainer />

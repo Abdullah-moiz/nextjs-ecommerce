@@ -90,7 +90,6 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
         };
 
         const res = await update_a_category(updatedData)
-        console.log(res)
         if (res?.success) {
             toast.success(res?.message);
             dispatch(setNavActive('Base'))
@@ -111,7 +110,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
 
 
     return (
-        <div className='w-full p-4 min-h-screen  bg-base-200 flex flex-col '>
+        <div className='w-full p-4 min-h-screen  bg-gray-50 flex flex-col '>
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul>
                     <li onClick={() => dispatch(setNavActive('Base')) }>
@@ -142,7 +141,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
                             wrapperClass=""
                             visible={true}
                         />
-                        <p className='text-sm mt-2 font-semibold text-orange-500'>Adding Category Hold Tight ....</p>
+                        <p className='text-sm mt-2 font-semibold text-orange-500'>updating Category Hold Tight ....</p>
                     </div>
                 ) : (
 

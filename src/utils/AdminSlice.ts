@@ -22,16 +22,14 @@ export const Admin = createSlice({
         state.category = action.payload
     },
     setProductData : (state, action) => {
-        state.category = action.payload
+        state.product = action.payload
     },
     setCatLoading : (state , action) => {
       state.catLoading = action.payload
     },
     setProdLoading : (state , action) => {
       state.productLoading = action.payload
-    }
-
-    
+    }    
   },
 })
 

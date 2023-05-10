@@ -102,7 +102,8 @@ export default function AddCategory() {
         setLoader(true)
         const CheckFileSize = maxSize(data.image[0]);
         if (CheckFileSize) return toast.error('Image size must be less then 1MB')
-        const uploadImageToFirebase = await uploadImages(data.image[0]);
+        // const uploadImageToFirebase = await uploadImages(data.image[0]);
+        const uploadImageToFirebase = 'https://firebasestorage.googleapis.com/v0/b/socialapp-9b83f.appspot.com/o/ecommerce%2Fcategory%2Fimages131.jpg-1683339363348-c4vcab?alt=media&token=f9303ff9-7d34-4514-a53f-832f72814337';
 
         const finalData = { categoryName: data.name, categoryDescription: data.description, categoryImage: uploadImageToFirebase, categorySlug: data.slug }
 
@@ -125,7 +126,7 @@ export default function AddCategory() {
 
 
     return (
-        <div className='w-full p-4 min-h-screen  bg-base-200 flex flex-col '>
+        <div className='w-full p-4 min-h-screen  bg-gray-50 flex flex-col '>
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul>
                     <li>

@@ -5,11 +5,8 @@ import Cookies from "js-cookie";
 
 export const get_all_categories = async () => {
   try {
-    const res = await fetch('/api/Admin/category/getCategory', {
+    const res = await fetch('/api/common/category/getCategory', {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${Cookies.get('token')}`,
-      },
     });
     const data = await res.json();
     return data;
@@ -38,11 +35,8 @@ export const add_new_category = async (formData: any) => {
 
 export const get_category_by_id = async (id:string) => {
     try {
-      const res = await fetch(`/api/Admin/category/get-category-by-id?id=${id}`, {
+      const res = await fetch(`/api/common/category/get-category-by-id?id=${id}`, {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${Cookies.get('token')}`
-        },
       })
   
       const data = await res.json();
@@ -83,7 +77,7 @@ export const update_a_category = async (formData : any) => {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log('Error in deleting Categories (service) =>', error)
+    console.log('Error in updating Categories (service) =>', error)
   }
 }
 
