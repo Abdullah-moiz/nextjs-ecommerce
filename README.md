@@ -21,9 +21,9 @@
 
 # ADMIN PANEL
  - Add a product ✔
- - view Product 
- - Delete a Product (TODO)
- - update product (TODO)
+ - view Product ✔
+ - Delete a Product ✔
+ - update product ✔
  - Add a Category ✔
  - view Category (Data tables) ✔
  - update Category  ✔
@@ -31,7 +31,7 @@
  - Handle Order Delivery  (TODO)
 
 # Customer
-- View Product & Category (TODO)
+- View Product & Category ✔
 - Add product to cart (TODO)
 - Increase Decrease cart Item  Quantity (TODO)
 - Bookmark favourite Product (TODO)
