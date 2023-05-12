@@ -9,7 +9,6 @@ import {  get_category_by_id, update_a_category } from '@/Services/Admin/categor
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr'
 import Image from 'next/image';
-import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { setNavActive } from '@/utils/AdminNavSlice';
 

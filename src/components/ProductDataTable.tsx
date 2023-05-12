@@ -25,9 +25,9 @@ type ProductData = {
   productQuantity: Number,
   productFeatured: Boolean,
   productCategory: {
-    _id :string,
-    categoryName :string,
-    categorySlug :string
+    _id: string,
+    categoryName: string,
+    categorySlug: string
   },
   createdAt: string;
   updatedAt: string;
@@ -37,15 +37,21 @@ type ProductData = {
 export default function ProductDataTable() {
   const { mutate } = useSWRConfig()
   const router = useRouter();
-  const [prodData, setprodData] = useState<ProductData[] | null>(null);
+  const [prodData, setprodData] = useState<ProductData[] | []>([]);
   const data = useSelector((state: RootState) => state.Admin.product)
   const isLoading = useSelector((state: RootState) => state.Admin.productLoading);
-
+  const [search, setSearch] = useState('');
+  const [filteredData, setFilteredData] = useState<ProductData[] | []>([]);
 
 
   useEffect(() => {
     setprodData(data)
   }, [data])
+
+  useEffect(() => {
+    setFilteredData(prodData);
+  }, [data])
+
 
 
 
@@ -93,27 +99,49 @@ export default function ProductDataTable() {
   }
 
 
+  useEffect(() => {
+    if (search === '') {
+      setFilteredData(prodData);
+    } else {
+      setFilteredData(prodData?.filter((item) => {
+        const itemData = item?.productCategory?.categoryName.toUpperCase();
+        const textData = search.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      }))
+    }
+
+
+  }, [search, prodData])
+
+
 
   return (
-    <>
+    <div className='w-full h-full'>
       <DataTable
         columns={columns}
-        data={prodData || []}
+        data={filteredData || []}
         key={'ThisProductData'}
         pagination
         keyField="id"
         title={`Products list`}
         fixedHeader
-        fixedHeaderScrollHeight='600px'
+        fixedHeaderScrollHeight='500px'
         selectableRows
         selectableRowsHighlight
         persistTableHead
         progressPending={isLoading}
         progressComponent={<Loading />}
-        className="bg-white px-4 h-4/5 "
+        subHeader
+        subHeaderComponent={
+          <input className='w-60  py-2 px-2  outline-none  border-b-2 border-orange-600' type={"search"}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={"Category Name"} />
+        }
+        className="bg-white px-4 h-4/6 "
       />
 
-    </>
+    </div>
   )
 }
 

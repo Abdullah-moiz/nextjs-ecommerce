@@ -23,7 +23,7 @@ export default function TopCategories() {
     const filteredCategories = catData?.slice(0, 3)
 
     return (
-        <div className='w-full  border-2 flex items-center flex-col justify-start'>
+        <div className='w-full  border- flex items-center flex-col justify-start'>
             <div className='flex items-center justify-center px-2 py-2 mb-2'>
                 <h1 className='py-2 px-4 border-x-2 border-x-orange-500 font-semibold text-2xl '>Top Categories</h1>
             </div>
@@ -33,7 +33,7 @@ export default function TopCategories() {
                         <>
                             {
                                 filteredCategories?.map((item: CategoryData) => {
-                                    return <CategoryCard
+                                    return <CategoryCard 
                                         categoryName={item?.categoryName}
                                         categoryDescription={item?.categoryDescription}
                                         categoryImage={item?.categoryImage}
