@@ -74,7 +74,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
   const category =  useSelector((state : RootState) => state.Admin.category) as CategoryData[] | undefined
 
 
-  const { data, isLoading } = useSWR('/gettingAllCategoriesFOrAdmin', () => get_product_by_id(params.id))
+  const { data, isLoading } = useSWR('/gettingProductbyID', () => get_product_by_id(params.id))
   if (data?.success !== true) toast.error(data?.message)
 
   useEffect(() => {

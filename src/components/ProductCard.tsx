@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import {BsCartPlus , BsFillBookmarkCheckFill} from 'react-icons/bs'
 
@@ -18,9 +19,10 @@ type ProductData = {
 };
   
 
-export default function ProductCard({productName , productFeatured ,productImage , productCategory , productPrice , productSlug} : ProductData) {
+export default function ProductCard({productName , productFeatured ,productImage , productCategory , productPrice , _id , productSlug} : ProductData) {
+    const router =  useRouter();
     return (
-        <div className="card card-compact m-3 w-80 bg-gray-50 shadow-xl relative">
+        <div onClick={() => router.push(`/product/product-detail/${_id}`)} className="card cursor-pointer card-compact m-3 w-80 bg-gray-50 shadow-xl relative">
             <div className='w-full rounded relative h-60'>
                 <Image src={ productImage || '/images98.jpg'} alt='no Image' className='rounded' fill/>
             </div>
