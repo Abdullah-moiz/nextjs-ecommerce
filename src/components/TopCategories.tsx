@@ -27,9 +27,9 @@ export default function TopCategories() {
             <div className='flex items-center justify-center px-2 py-2 mb-2'>
                 <h1 className='py-2 px-4 border-x-2 border-x-orange-500 font-semibold text-2xl '>Top Categories</h1>
             </div>
-            <div className='md:w-4/5 w-full px-1 h-full py-2 md:px-4 flex items-center justify-center flex-wrap'>
+            <div className='md:w-4/5 w-full min-h-16  px-1  py-2 md:px-4 flex items-center justify-center flex-wrap'>
                 {
-                    catLoading ? <Loading /> :
+                    catLoading ? <div className='w-full h-96'><Loading /> </div> :
                         <>
                             {
                                 filteredCategories?.map((item: CategoryData) => {

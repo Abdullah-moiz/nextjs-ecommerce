@@ -3,13 +3,16 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 export default function Navbar() {
     const router = useRouter()
     const [Scrolled, setScrolled] = useState(false);
+    const [userisLoggedIn, setUserIsLoggedIn] = useState(false);
 
-
-
+    useEffect(() => {
+        if (localStorage.getItem('user')) setUserIsLoggedIn(true)
+    }, [])
 
     useEffect(() => {
         window.onscroll = () => {
@@ -17,6 +20,14 @@ export default function Navbar() {
             return () => window.onscroll = null
         }
     }, [Scrolled])
+
+    
+
+    const handleLogout = () => {
+        Cookies.remove('token');
+        localStorage.clear();
+        router.refresh();
+    }
 
     return (
         <div className={`navbar ${Scrolled ? "bg-white/95  " : "bg-transparent"}  fixed top-0 left-0 z-50`}>
@@ -34,7 +45,14 @@ export default function Navbar() {
             </div>
             <div className='navbar-end'>
                 <div className="flex-none">
-                    <button onClick={() => router.push('/auth/login')} className='btn mx-2'>Login</button>
+
+                    {
+                        userisLoggedIn ? <button onClick={handleLogout} className='btn mx-2'>logout</button>
+                            :
+                            <button onClick={() => router.push('/auth/login')} className='btn mx-2'>Login</button>
+                    }
+
+
                 </div>
             </div>
         </div>

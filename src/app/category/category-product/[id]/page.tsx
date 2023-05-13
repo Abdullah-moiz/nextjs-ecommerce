@@ -33,7 +33,7 @@ type ProductData = {
 
 
 export default function Page({ params, searchParams }: { params: pageParam, searchParams: any }) {
-    const [thisProduct , setThisProdData] =  useState<ProductData[] | null>([]);
+    const [thisProduct , setThisProdData] =  useState<ProductData[] | []>([]);
     const { data, isLoading } = useSWR('/gettingProductOFSpecificCategoryID', () => get_product_by_category_id(params.id))
     if (data?.success !== true) toast.error(data?.message)
 

@@ -5,7 +5,7 @@ import { TailSpin } from 'react-loader-spinner'
 
 export default function Loading() {
     return (
-        <div className='w-full  flex-col h-96 flex items-center justify-center '>
+        <div className='w-full  flex-col min-h-full h-screen flex items-center justify-center '>
             <TailSpin
                 height="50"
                 width="50"
