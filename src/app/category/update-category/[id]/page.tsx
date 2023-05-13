@@ -1,11 +1,11 @@
 "use client"
 
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import { TailSpin } from 'react-loader-spinner';
-import {  get_category_by_id, update_a_category } from '@/Services/Admin/category';
+import { get_category_by_id, update_a_category } from '@/Services/Admin/category';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr'
 import Image from 'next/image';
@@ -14,7 +14,7 @@ import { setNavActive } from '@/utils/AdminNavSlice';
 
 
 type Inputs = {
-    _id : string,
+    _id: string,
     name: string,
     description: string,
     slug: string,
@@ -34,7 +34,7 @@ type CategoryData = {
 
 
 
-  
+
 
 
 
@@ -65,24 +65,31 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
     });
 
 
-    const setValueofFormData = () => {
-        if (catData) {
-            setValue('name', catData?.categoryName)
-            setValue('description', catData?.categoryDescription)
-            setValue('slug', catData?.categorySlug)
-        }
-    }
 
+
+
+    const setValueofFormData = useCallback(
+        () => {
+            setValue('name', catData?.categoryName ?? '')
+            setValue('description', catData?.categoryDescription ?? '')
+            setValue('slug', catData?.categorySlug ?? '')
+        },
+        [catData]
+    );
+
+    
     useEffect(() => {
-        if (catData) setValueofFormData();
-    }, [catData , setValueofFormData])
+        if (catData) {
+            setValueofFormData();
+        }
+    }, [catData]);
 
     const onSubmit: SubmitHandler<Inputs> = async data => {
         setLoader(false)
 
 
         const updatedData: Inputs = {
-            _id : params.id,
+            _id: params.id,
             name: data.name !== catData?.categoryName ? data.name : catData?.categoryName,
             description: data.description !== catData?.categoryDescription ? data.description : catData?.categoryDescription,
             slug: data.slug !== catData?.categorySlug ? data.slug : catData?.categorySlug,
@@ -112,7 +119,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
         <div className='w-full p-4 min-h-screen  bg-gray-50 flex flex-col '>
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul>
-                    <li onClick={() => dispatch(setNavActive('Base')) }>
+                    <li onClick={() => dispatch(setNavActive('Base'))}>
                         <Link href={'/Dashboard'}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                             Home

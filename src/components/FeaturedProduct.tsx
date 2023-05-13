@@ -53,6 +53,9 @@ export default function FeaturedProduct() {
                     prodLoading ? <Loading /> :
                         <>
                             {
+                                filteredProducts?.length <  1 ? 
+                                <h1 className='text-2xl font-semibold text-gray-500'>No Featured Products</h1> 
+                                :
                                 filteredProducts?.map((item: ProductData) => {
                                     return <ProductCard
                                         productName = {item?.productName}
