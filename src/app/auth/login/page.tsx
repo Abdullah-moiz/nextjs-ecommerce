@@ -60,7 +60,7 @@ export default function Login() {
         if (Cookies.get('token')) {
             Router.push('/');
         }
-    }, [])
+    }, [Router])
 
 
     return (

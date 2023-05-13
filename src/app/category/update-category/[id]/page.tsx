@@ -75,7 +75,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
 
     useEffect(() => {
         if (catData) setValueofFormData();
-    }, [catData])
+    }, [catData , setValueofFormData])
 
     const onSubmit: SubmitHandler<Inputs> = async data => {
         setLoader(false)

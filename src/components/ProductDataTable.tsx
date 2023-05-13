@@ -50,7 +50,7 @@ export default function ProductDataTable() {
 
   useEffect(() => {
     setFilteredData(prodData);
-  }, [data])
+  }, [prodData])
 
 
 

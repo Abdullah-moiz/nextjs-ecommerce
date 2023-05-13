@@ -46,7 +46,7 @@ export default function CategoryDataTable() {
 
   useEffect(() => {
     setFilteredData(catData);
-  }, [data])
+  }, [ catData])
 
 
 

@@ -97,7 +97,6 @@ export default function AddProduct() {
 
     const [loader, setLoader] = useState(false)
     const Router = useRouter();
-    const { mutate } = useSWRConfig()
     const category =  useSelector((state : RootState) => state.Admin.category) as CategoryData[] | undefined
 
     useEffect(() => {
@@ -106,14 +105,11 @@ export default function AddProduct() {
             Router.push('/')
         }
         
-    }, [ Cookies, Router])
+    }, [  Router])
 
     
 
 
-    useEffect(() => {
-        mutate('/gettingAllCategoriesFOrAdmin')
-    } , [category])
 
 
 
@@ -125,8 +121,8 @@ export default function AddProduct() {
         setLoader(true)
         const CheckFileSize = maxSize(data.image[0]);
         if (CheckFileSize) return toast.error('Image size must be less then 1MB')
-        // const uploadImageToFirebase = await uploadImages(data.image[0]);
-        const uploadImageToFirebase = 'https://firebasestorage.googleapis.com/v0/b/socialapp-9b83f.appspot.com/o/ecommerce%2Fcategory%2Fimages131.jpg-1683339363348-c4vcab?alt=media&token=f9303ff9-7d34-4514-a53f-832f72814337';
+        const uploadImageToFirebase = await uploadImages(data.image[0]);
+        // const uploadImageToFirebase = 'https://firebasestorage.googleapis.com/v0/b/socialapp-9b83f.appspot.com/o/ecommerce%2Fcategory%2Fimages131.jpg-1683339363348-c4vcab?alt=media&token=f9303ff9-7d34-4514-a53f-832f72814337';
 
         const finalData = { productName: data.name, productDescription: data.description, productImage: uploadImageToFirebase, productSlug: data.slug , productFeatured  : data.feature , productPrice : data.price , productQuantity : data.quantity , productCategory : data.categoryID}
         const res = await add_new_product(finalData)
