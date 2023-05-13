@@ -21,17 +21,21 @@
 
 # ADMIN PANEL
  - Add a product ✔
- - view Product 
- - Delete a Product (TODO)
- - update product (TODO)
+ - view Product ✔
+ - Delete a Product ✔
+ - update product ✔
  - Add a Category ✔
  - view Category (Data tables) ✔
  - update Category  ✔
  - Delete category ✔
+ - search category By name ✔
+ - search product by category Name ✔
  - Handle Order Delivery  (TODO)
 
 # Customer
-- View Product & Category (TODO)
+- View Product & Category ✔
+- view product related to specific category ✔
+- view dynamic pages detail with breadcamp ✔
 - Add product to cart (TODO)
 - Increase Decrease cart Item  Quantity (TODO)
 - Bookmark favourite Product (TODO)
