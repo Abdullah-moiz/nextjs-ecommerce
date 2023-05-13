@@ -78,7 +78,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
                         :
                         <div className='lg:w-4/5 w-full h-full  bg-gray-100 rounded-xl lg:h-4/5 flex flex-col lg:flex-row items-center justify-center shadow-2xl  '>
                             <div className='lg:w-4/12 w-full h-60  lg:h-full  rounded-xl z-10 relative'>
-                                <Image src={'/images98.jpg'} alt='no image' fill className='rounded-xl' />
+                                <Image src={prodData?.productImage || '/images98.jpg'} alt='no image' fill className='rounded-xl' />
                             </div>
                             <div className='lg:w-8/12 w-full px-3 h-full  rounded flex flex-col lg:px-5 py-2'>
                                 <div className='flex flex-col  lg:flex-row md:justify-between w-full md:h-20 py-2 items-center'>
@@ -92,7 +92,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
                                     }
                                 </div>
                                 <p className=' py-2   lg:h-40 w-full'>
-                                    {prodData?.productDescription} adipisicing elit. Fugit quas veniam eius doloribus, consequatur numquam cum veritatis a eum neque saepe ducimus fugiat nobis. Fugit dolorum, et possimus id eaque corrupti laboriosam labore velit exercitationem ipsam numquam non minima eos?
+                                    {prodData?.productDescription} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, blanditiis.
                                 </p>
                                 <h1 className='text-3xl font-semibold text-black py-2'>$ {`${prodData?.productPrice}`}</h1>
                                 <div className='w-full py-2 lg:flex-row flex-col flex '>

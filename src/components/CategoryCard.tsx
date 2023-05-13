@@ -22,9 +22,8 @@ export default function CategoryCard({ categoryDescription, categoryImage, categ
                 <Image src={categoryImage || '/images98.jpg'} alt='no Image' className='rounded' fill />
             </div>
             <div className="card-body">
-                <h2 className="card-title">{categoryName} </h2>
-                <p>{categoryDescription}</p>
-                <button className='btn btn-wide' >View Products</button>
+                <h2 className="card-title mb-1">{categoryName} </h2>
+                <button className='btn btn-wide mt-2' >View Products</button>
             </div>
         </div>
     )
