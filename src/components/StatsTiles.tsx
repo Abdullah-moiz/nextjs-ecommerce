@@ -18,7 +18,7 @@ interface Props {
 
 export default function StatsTiles({ Icon, title, count }: Props) {
     return (
-        <div className='w-96 h-40 m-2  cursor-pointer hover:shadow-xl transition-all duration-500 bg-white rounded flex flex-col items-center justify-center'>
+        <div className='w-96 h-40 m-2 dark:text-black cursor-pointer hover:shadow-xl transition-all duration-500 bg-white rounded flex flex-col items-center justify-center'>
             {Icon === 'GrCompliance' && <GrCompliance className='text-3xl text-orange-600' />}
             {Icon === 'GrUser' && <GrUser className='text-3xl text-orange-600' />}
             {Icon === 'GiAbstract010' && <GiAbstract010 className='text-3xl text-orange-600' />}

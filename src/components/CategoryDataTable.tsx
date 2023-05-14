@@ -112,7 +112,7 @@ export default function CategoryDataTable() {
         key={'ThisisCategoryData'}
         pagination
         keyField="id"
-        title={`Categories list`}
+        title={`Categories list`} 
         fixedHeader
         fixedHeaderScrollHeight='500px'
         selectableRows
@@ -122,7 +122,7 @@ export default function CategoryDataTable() {
         progressComponent={<Loading />}
         subHeader
         subHeaderComponent={
-          <input className='w-60  py-2 px-2  outline-none  border-b-2 border-orange-600' type={"search"}
+          <input className='w-60 dark:bg-transparent py-2 px-2  outline-none  border-b-2 border-orange-600' type={"search"}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={"Category Name"} />

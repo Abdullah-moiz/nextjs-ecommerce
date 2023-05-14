@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux'
 export default function AdminSidebar() {
     const dispatch =  useDispatch();
     return (
-        <div className='w-60 hidden md:block bg-white h-full'>
+        <div className='w-60 hidden dark:text-black md:block bg-white h-full'>
             <div className='w-full text-center py-2 px-2 h-20'>
                 <h1 className='flex text-2xl font-semibold items-center justify-center'><RxDashboard className='mx-2' /> Dashboard</h1>
             </div>

@@ -1,11 +1,15 @@
 "use client"
+import React  from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 
 
-export default function GettingDatasLength() {
 
-  
+
+
+export default function  GettingDatasLength() {
+
+   
   const catData = useSelector((state: RootState) => state.Admin.category);
 
   const prodData = useSelector((state: RootState) => state.Admin.product);
@@ -22,13 +26,13 @@ export default function GettingDatasLength() {
       icon: "GiAbstract010",
       color: "text-blue-600",
       title: "Total Products",
-      count: prodData?.length
+      count: prodData?.length || 0
     },
     {
       icon: "CgMenuGridR",
       color: "text-purple-600",
       title: "Total Categories",
-      count: catData?.length
+      count: catData?.length || 0
     },
     {
       icon: "AiOutlineClockCircle",
@@ -48,5 +52,5 @@ export default function GettingDatasLength() {
       title: "Month Statistics",
       count: +100,
     },
-  ];
+  ]
 }

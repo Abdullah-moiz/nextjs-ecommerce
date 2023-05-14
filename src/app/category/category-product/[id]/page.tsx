@@ -46,7 +46,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
     })
 
     return (
-        <div className='w-full h-screen bg-gray-50 py-4 px-2 '>
+        <div className='w-full h-screen dark:text-black bg-gray-50 py-4 px-2 '>
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul>
                     <li>
