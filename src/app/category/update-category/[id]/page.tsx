@@ -11,6 +11,7 @@ import useSWR from 'swr'
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { setNavActive } from '@/utils/AdminNavSlice';
+import Cookies from 'js-cookie';
 
 
 type Inputs = {
@@ -43,6 +44,14 @@ interface pageParam {
     id: string
 }
 
+interface userData {
+    email: String,
+    role: String,
+    _id: String,
+    name: String
+  }
+  
+  
 export default function Page({ params, searchParams }: { params: pageParam, searchParams: any }) {
 
 
@@ -50,6 +59,14 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
     const Router = useRouter();
     const dispatch = useDispatch();
     const [catData, setCatData] = useState<CategoryData | undefined>(undefined);
+
+    useEffect(() => {
+        const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
+        if (!Cookies.get('token') || user?.role !== 'admin') {
+            Router.push('/')
+        }
+        dispatch(setNavActive('Base'))
+    }, [dispatch, Cookies, Router])
 
 
     const { data, isLoading } = useSWR('/gettingAllCategoriesFOrAdmin', () => get_category_by_id(params.id))
@@ -77,7 +94,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
         [catData]
     );
 
-    
+
     useEffect(() => {
         if (catData) {
             setValueofFormData();
@@ -116,7 +133,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
 
 
     return (
-        <div className='w-full p-4 min-h-screen  bg-gray-50 flex flex-col '>
+        <div className='w-full dark:text-black p-4 min-h-screen  bg-gray-50 flex flex-col '>
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul>
                     <li onClick={() => dispatch(setNavActive('Base'))}>

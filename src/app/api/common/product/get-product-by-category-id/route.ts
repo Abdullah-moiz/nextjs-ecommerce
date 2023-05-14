@@ -5,13 +5,14 @@ import Product from "@/model/Product";
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
+  await connectDB();
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 
     if(!id) return NextResponse.json({status: 400 , success: false, message: 'Please provide Category id.' });
 
-    await connectDB();
+    
   
 
    

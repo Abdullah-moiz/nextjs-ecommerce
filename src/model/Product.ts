@@ -12,7 +12,7 @@ const ProductSchema = new mongoose.Schema({
     productFeatured : Boolean,
     productCategory: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Categories',
+        ref: 'Category',
         required: true
     },
 

@@ -7,8 +7,9 @@ import Product from "@/model/Product";
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
+  await connectDB();
   try {
-    await connectDB();
+    
 
 
 

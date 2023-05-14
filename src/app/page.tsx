@@ -8,7 +8,7 @@ import TopCategories from '@/components/TopCategories'
 import { get_all_categories } from '@/Services/Admin/category'
 import { get_all_products } from '@/Services/Admin/product'
 import useSWR from 'swr'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { setCategoryData, setCatLoading, setProdLoading, setProductData } from '@/utils/AdminSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
@@ -39,8 +39,10 @@ export default function Home() {
             <TopCategories />
             <FeaturedProduct />
             <Footer />
+            
           </>
       }
+      <ToastContainer />
     </>
   )
 }

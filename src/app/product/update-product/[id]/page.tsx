@@ -11,7 +11,8 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNavActive } from '@/utils/AdminNavSlice';
 import { RootState } from '@/Store/store';
-import { get_product_by_id , update_a_product } from '@/Services/Admin/product';
+import { get_product_by_id, update_a_product } from '@/Services/Admin/product';
+import Cookies from 'js-cookie';
 
 
 
@@ -64,6 +65,13 @@ interface pageParam {
   id: string
 }
 
+interface userData {
+  email: String,
+  role: String,
+  _id: String,
+  name: String
+}
+
 export default function Page({ params, searchParams }: { params: pageParam, searchParams: any }) {
 
 
@@ -71,7 +79,17 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
   const Router = useRouter();
   const dispatch = useDispatch();
   const [prodData, setprodData] = useState<ProductData | undefined>(undefined);
-  const category =  useSelector((state : RootState) => state.Admin.category) as CategoryData[] | undefined
+  const category = useSelector((state: RootState) => state.Admin.category) as CategoryData[] | undefined
+
+
+  useEffect(() => {
+    const user: userData | null = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!Cookies.get('token') || user?.role !== 'admin') {
+      Router.push('/')
+    }
+
+  }, [Router])
+
 
 
   const { data, isLoading } = useSWR('/gettingProductbyID', () => get_product_by_id(params.id))
@@ -141,7 +159,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
 
 
   return (
-    <div className='w-full p-4 min-h-screen  bg-gray-50 flex flex-col '>
+    <div className='w-full dark:text-black p-4 min-h-screen  bg-gray-50 flex flex-col '>
       <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
         <ul>
           <li onClick={() => dispatch(setNavActive('Base'))}>
@@ -235,7 +253,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
               <div className="form-control py-2">
                 <label className="label cursor-pointer">
                   <span className="label-text">Featured Product</span>
-                  <input {...register("feature")} type="checkbox" className="checkbox" />
+                  <input {...register("feature")} type="checkbox" className="checkbox dark:border-black" />
                 </label>
               </div>
               {

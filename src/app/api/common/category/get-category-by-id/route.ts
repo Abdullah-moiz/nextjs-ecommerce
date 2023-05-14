@@ -6,13 +6,14 @@ import Category from "@/model/Category";
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
+  await connectDB();
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 
     if(!id) return NextResponse.json({status: 400 , success: false, message: 'Please provide category id.' });
 
-    await connectDB();
+    
     const isAuthenticated = await AuthCheck(req);
 
    
