@@ -43,12 +43,13 @@ export default function Dashboard() {
   const { data: productData, isLoading: productLoading } = useSWR('/gettingAllProductsFOrAdmin', get_all_products)
   if (productData?.success !== true) toast.error(productData?.message)
 
+
   useEffect(() => {
     dispatch(setCategoryData(categoryData?.data))
     dispatch(setCatLoading(categoryLoading))
     dispatch(setProductData(productData?.data))
     dispatch(setProdLoading(productLoading))
-  }, [categoryData, dispatch, categoryLoading , productData , productLoading])
+  }, [categoryData, dispatch, categoryLoading, productData, productLoading])
 
 
 
