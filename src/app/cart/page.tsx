@@ -1,4 +1,5 @@
 'use client'
+
 import { get_all_cart_Items } from '@/Services/common/cart';
 import { RootState } from '@/Store/store';
 import CartCard from '@/components/CartCard'
@@ -39,7 +40,7 @@ type Data  =  {
 
 
 
-export default function page() {
+export default function Page() {
     const Router = useRouter();
     const dispatch = useDispatch();
     const user  = useSelector((state : RootState) => state.User.userData ) as userData | null
