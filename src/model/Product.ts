@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Category from "./Category";
+
 
 
 const ProductSchema = new mongoose.Schema({
@@ -12,7 +12,7 @@ const ProductSchema = new mongoose.Schema({
     productFeatured : Boolean,
     productCategory: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
+        ref: 'Categories',
         required: true
     },
 
