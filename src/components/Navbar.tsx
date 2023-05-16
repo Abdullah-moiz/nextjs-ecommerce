@@ -4,15 +4,14 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { RootState } from '@/Store/store';
+import { useSelector } from 'react-redux';
+import { FaCartArrowDown } from 'react-icons/fa';
 
 export default function Navbar() {
     const router = useRouter()
     const [Scrolled, setScrolled] = useState(false);
-    const [userisLoggedIn, setUserIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        if (localStorage.getItem('user')) setUserIsLoggedIn(true)
-    }, [])
+    const user =  useSelector((state : RootState) => state.User.userData)
 
     useEffect(() => {
         window.onscroll = () => {
@@ -21,12 +20,12 @@ export default function Navbar() {
         }
     }, [Scrolled])
 
-    
+
 
     const handleLogout = () => {
         Cookies.remove('token');
         localStorage.clear();
-        router.refresh();
+        location.reload();
     }
 
     return (
@@ -47,7 +46,12 @@ export default function Navbar() {
                 <div className="flex-none">
 
                     {
-                        userisLoggedIn ? <button onClick={handleLogout} className='btn text-white mx-2'>logout</button>
+                        user ?
+                        <div className='flex items-center justify-center  min-h-full'>
+                         <button onClick={handleLogout} className='btn text-white mx-2'>logout</button>
+                         <button onClick={() => router.push('/cart')} className='btn btn-circle  mx-2'><FaCartArrowDown className='text-white text-xl' /></button>
+                         
+                        </div>
                             :
                             <button onClick={() => router.push('/auth/login')} className='btn text-white mx-2'>Login</button>
                     }

@@ -14,11 +14,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import Loading from './loading'
 import { useSWRConfig } from "swr"
+import { setUserData } from '@/utils/UserDataSlice'
 
 
 export default function Home() {
   const dispatch = useDispatch();
   const { mutate } = useSWRConfig();
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if(!userData) return;
+    dispatch(setUserData(JSON.parse(userData)));
+  }, [])
+
+
 
   const { data: categoryData, isLoading: categoryLoading } = useSWR('/gettingAllCategoriesFOrAdmin', get_all_categories)
   if (categoryData?.success !== true) toast.error(categoryData?.message)
@@ -30,7 +39,7 @@ export default function Home() {
     dispatch(setCatLoading(categoryLoading))
     if (productData?.data?.length < 1) {
       mutate('gettingAllProductsFOrAdmin')
-    } 
+    }
     dispatch(setProductData(productData?.data))
     dispatch(setProdLoading(productLoading))
   }, [categoryData, dispatch, categoryLoading, productData, productLoading])

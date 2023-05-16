@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 interface UserState {
-    userData:  [] | null,
+    userData:  {} | null,
     userToken: string | null,
 }
 
