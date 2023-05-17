@@ -7,11 +7,12 @@ import { setNavActive } from '@/utils/AdminNavSlice';
 import Cookies from 'js-cookie';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react'
+import React, { useEffect  , useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import useSWR from 'swr'
 import Loading from '../loading';
+
 
 interface userData {
     email: String,
@@ -44,6 +45,8 @@ export default function Page() {
     const Router = useRouter();
     const dispatch = useDispatch();
     const user  = useSelector((state : RootState) => state.User.userData ) as userData | null
+    const [loading , setLoading] =  useState(true)
+    const [data   , setData ] =  useState<Data[] | null> ([])
 
 
     useEffect(() => {
@@ -54,10 +57,24 @@ export default function Page() {
     }, [dispatch, Router])
 
 
-    const { data , isLoading } = useSWR('/getCartItemForUsers', () => get_all_cart_Items(user?._id ))
-    if (data?.success !== true) toast.error(data?.message)
+    useEffect(() => {
+        fetchCartData();
+    },[])
 
-    console.log(data)
+    const fetchCartData  =  async  () => {
+        if(!user?._id) return Router.push('/')
+        const cartData  =  await get_all_cart_Items(user?._id)
+        if(cartData?.success){
+            setData(cartData?.data);
+        }else{
+            toast.error(cartData?.message)
+        }
+        setLoading(false)
+    }
+
+
+ 
+
 
     return (
         <div className='w-full h-screen px-5 py-2 bg-gray-50 dark:text-black'>
@@ -75,13 +92,13 @@ export default function Page() {
                     </li>
                 </ul>
             </div>
-            <div className='w-full h-5/6  flex items-start justify-center flex-wrap overflow-auto '>
+            <div className='w-full h-5/6  flex items-start  flex-wrap overflow-auto '>
 
                 {
-                    isLoading ? <Loading /> : 
+                    loading ? <Loading /> : 
                     <>
                     {
-                        data?.data?.map((item : Data) => {
+                        data?.map((item : Data) => {
                             return <CartCard key={item._id}
                             productID={item.productID}
                                userID={item.userID}                  

@@ -28,7 +28,7 @@ export async function GET(req: Request) {
 
 
   } catch (error) {
-    console.log('Error in getting  categories by id:', error);
+    console.log('Error in getting  cart :', error);
     return NextResponse.json({ status: 500, success: false, message: 'Something went wrong. Please try again!' });
   }
 }
