@@ -38,7 +38,8 @@
 - View Product & Category ✔
 - view product related to specific category ✔
 - view dynamic pages detail with breadcamp ✔
-- Add product to cart (TODO)
+- Add product to cart ✔
+- Remove Product from cart ✔
 - Increase Decrease cart Item  Quantity (TODO)
 - Bookmark favourite Product (TODO)
 - remove product from bookmark (TODO)
