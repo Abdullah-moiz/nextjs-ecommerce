@@ -40,7 +40,7 @@
 - view dynamic pages detail with breadcamp ✔
 - Add product to cart ✔
 - Remove Product from cart ✔
-- Increase Decrease cart Item  Quantity (TODO)
+- Increase Decrease cart Item  Quantity ✔
 - Bookmark favourite Product (TODO)
 - remove product from bookmark (TODO)
 - Order a Product (TODO)
@@ -122,6 +122,10 @@ Install my-project with npm
 #### view Product of Detail with Dynamic Breadcamp 
 
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/9eda3f30-3a12-4401-952d-3a694b097e77)
+
+#### Cart Page 
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/23b08511-0e6e-41c1-8b9d-7f72b5b65952)
+
 
 
 
