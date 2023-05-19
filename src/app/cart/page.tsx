@@ -7,11 +7,12 @@ import { setNavActive } from '@/utils/AdminNavSlice';
 import Cookies from 'js-cookie';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-import React, { useEffect  , useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import useSWR from 'swr'
 import Loading from '../loading';
+import { setCart } from '@/utils/CartSlice';
+
 
 
 interface userData {
@@ -22,35 +23,35 @@ interface userData {
 }
 
 
-type Data  =  {
-    productID : {
-        productName : string, 
-        productPrice : String ,
+type Data = {
+    productID: {
+        productName: string,
+        productPrice: String,
         _id: string,
-        productImage : string,
-        productQuantity : string , 
+        productImage: string,
+        productQuantity: string,
     }
-    userID : {
-        email : string , 
-        _id :string ,
+    userID: {
+        email: string,
+        _id: string,
     },
-    _id :string
+    _id: string
 
 
 }
 
 
-
 export default function Page() {
     const Router = useRouter();
     const dispatch = useDispatch();
-    const user  = useSelector((state : RootState) => state.User.userData ) as userData | null
-    const [loading , setLoading] =  useState(true)
-    const [data   , setData ] =  useState<Data[] | null> ([])
+    const user = useSelector((state: RootState) => state.User.userData) as userData | null
+    const [loading, setLoading] = useState(true)
+
+    const cart = useSelector((state: RootState) => state.Cart.cart) as Data[] | null
 
 
     useEffect(() => {
-        if (!Cookies.get('token') ||  user === null) {
+        if (!Cookies.get('token') || user === null) {
             Router.push('/')
         }
         dispatch(setNavActive('Base'))
@@ -59,21 +60,34 @@ export default function Page() {
 
     useEffect(() => {
         fetchCartData();
-    },[])
+    }, [])
 
-    const fetchCartData  =  async  () => {
-        if(!user?._id) return Router.push('/')
-        const cartData  =  await get_all_cart_Items(user?._id)
-        if(cartData?.success){
-            setData(cartData?.data);
-        }else{
+    const fetchCartData = async () => {
+        if (!user?._id) return Router.push('/')
+        const cartData = await get_all_cart_Items(user?._id)
+        if (cartData?.success) {
+            dispatch(setCart(cartData?.data))
+        } else {
             toast.error(cartData?.message)
         }
         setLoading(false)
     }
 
 
- 
+    function calculateTotalPrice(myCart: Data[]) {
+        const totalPrice = myCart?.reduce((acc, item) => {
+            return acc + (Number(item.productID.productQuantity) * Number(item.productID.productPrice));
+        }, 0);
+
+        return totalPrice;
+    }
+
+    const totalPrice = calculateTotalPrice(cart as Data[])
+
+
+
+
+
 
 
     return (
@@ -92,22 +106,26 @@ export default function Page() {
                     </li>
                 </ul>
             </div>
-            <div className='w-full h-5/6  flex items-start  flex-wrap overflow-auto '>
+            <div className='w-full h-4/6  flex items-start  flex-wrap overflow-auto '>
 
                 {
-                    loading ? <Loading /> : 
-                    <>
-                    {
-                        data?.map((item : Data) => {
-                            return <CartCard key={item._id}
-                            productID={item.productID}
-                               userID={item.userID}                  
-                               _id = {item._id}
-                            />
-                        })
-                    }
-                    </>
+                    loading ? <Loading /> :
+                        <>
+                            {
+                                cart?.map((item: Data) => {
+                                    return <CartCard key={item._id}
+                                        productID={item.productID}
+                                        userID={item.userID}
+                                        _id={item._id}
+                                    />
+                                })
+                            }
+                        </>
                 }
+            </div>
+            <div className='flex px-4 items-end justify-center flex-col'>
+                <h1 className='py-2 px-2 mb-2 text-lg border-b border-orange-600'>Total Price ${totalPrice || 0}</h1>
+                <Link href={"#"} className='btn'>Checkout</Link>
             </div>
             <ToastContainer />
         </div>

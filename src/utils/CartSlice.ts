@@ -21,13 +21,13 @@ interface CartItem {
 }
 
 interface Data {
-    cart: CartItem[];
+    cart: null;
     total: number;
 }
 
 
 const initialState: Data = {
-    cart: [],
+    cart: null,
     total: 0,
 }
 
@@ -37,7 +37,7 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         setCart: (state, action) => {
-            state.cart = [...state.cart, action.payload]
+            state.cart =  action.payload
         },
         setTotalPrice  : (state , action) => {
             state.total = action.payload
