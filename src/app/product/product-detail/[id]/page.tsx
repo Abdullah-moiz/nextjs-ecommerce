@@ -5,11 +5,15 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { BiCartAdd } from 'react-icons/bi'
 import { RiBookMarkFill } from 'react-icons/ri'
-import { FaProductHunt } from 'react-icons/fa'
+import {DiCodeigniter} from 'react-icons/di'
 import useSWR from 'swr'
 import { ToastContainer, toast } from 'react-toastify'
 import { get_product_by_id } from '@/Services/Admin/product'
 import Loading from '@/app/loading'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/Store/store'
+import { add_to_cart } from '@/Services/common/cart'
+import { setUserData } from '@/utils/UserDataSlice'
 
 
 interface pageParam {
@@ -34,16 +38,42 @@ type ProductData = {
     updatedAt: string;
 };
 
+type User = {
+    email: string,
+    name: string,
+    _id: string,
+}
 
 export default function Page({ params, searchParams }: { params: pageParam, searchParams: any }) {
-
+    const dispatch = useDispatch();
     const [prodData, setprodData] = useState<ProductData | undefined>(undefined);
+    const user = useSelector((state: RootState) => state.User.userData) as User | null
     const { data, isLoading } = useSWR('/gettingProductbyID', () => get_product_by_id(params.id))
     if (data?.success !== true) toast.error(data?.message)
+
+
+    useEffect(() => {
+        const userData = localStorage.getItem('user');
+        if (!userData) return;
+        dispatch(setUserData(JSON.parse(userData)));
+    }, [])
 
     useEffect(() => {
         setprodData(data?.data)
     }, [data])
+
+
+
+
+    const AddToCart = async () => {
+        const finalData = { productID: params.id, userID: user?._id }
+        const res = await add_to_cart(finalData);
+        if (res?.success) {
+            toast.success(res?.message);
+        } else {
+            toast.error(res?.message)
+        }
+    }
 
 
 
@@ -86,7 +116,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
                                     {
                                         prodData?.productFeatured &&
                                         <p className='px-3 py-2 bg-orange-600 hidden lg:flex font-semibold tracking-widest rounded text-white  items-center justify-center '>
-                                            <FaProductHunt className='mx-2' />
+                                            <DiCodeigniter className='mx-2' />
                                             Featured Product
                                         </p>
                                     }
@@ -96,7 +126,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
                                 </p>
                                 <h1 className='text-3xl font-semibold text-black py-2'>$ {`${prodData?.productPrice}`}</h1>
                                 <div className='w-full py-2 lg:flex-row flex-col flex '>
-                                    <button className='btn m-2 lg:w-52 h-10 btn-outline btn-success flex items-center justify-center'> <BiCartAdd className='text-3xl mx-2' /> Add to Cart</button>
+                                    <button onClick={AddToCart} className='btn m-2 lg:w-52 h-10 btn-outline btn-success flex items-center justify-center'> <BiCartAdd className='text-3xl mx-2' /> Add to Cart</button>
                                     <button className='btn m-2  lg:w-52 h-10 btn-outline btn-success flex items-center justify-center'> <RiBookMarkFill className='text-3xl mx-2' />Bookmark</button>
                                 </div>
 

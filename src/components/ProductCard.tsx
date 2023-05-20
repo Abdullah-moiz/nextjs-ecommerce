@@ -55,7 +55,7 @@ export default function ProductCard({ productName, productFeatured, productImage
 
             <div className="card-body">
                 <h2 className="card-title" onClick={() => router.push(`/product/product-detail/${_id}`)}>{productName} </h2>
-                <p className='font-semibold' onClick={() => router.push(`/product/product-detail/${_id}`)}>{`$ ${productPrice}`}</p>
+                <p className='font-semibold' onClick={() => router.push(`/product/product-detail/${_id}`)}>{`Rs ${productPrice}`}</p>
                 <div className="card-actions justify-end z-20">
                     <button onClick={AddToCart} className="btn  btn-circle btn-ghost "><BsCartPlus className='text-2xl text-orange-600 font-semibold' /></button>
                     <button className="btn btn-circle btn-ghost absolute top-0 right-0 "><BsFillBookmarkCheckFill className='text-2xl text-orange-600 font-semibold' /></button>

@@ -35,9 +35,7 @@ type Data = {
         email: string,
         _id: string,
     },
-    _id: string
-
-
+    _id: string,
 }
 
 
@@ -124,7 +122,7 @@ export default function Page() {
                 }
             </div>
             <div className='flex px-4 items-end justify-center flex-col'>
-                <h1 className='py-2 px-2 mb-2 text-lg border-b border-orange-600'>Total Price ${totalPrice || 0}</h1>
+                <h1 className='py-2 px-2 mb-2 text-lg border-b border-orange-600'>Total Price Rs{totalPrice || 0}</h1>
                 <button  className='btn'>Checkout</button>
             </div>
             <ToastContainer />

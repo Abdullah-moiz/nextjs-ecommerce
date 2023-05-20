@@ -1,11 +1,12 @@
 "use client"
 
 
-import { delete_a_cart_item } from '@/Services/common/cart'
+import { delete_a_cart_item, get_all_cart_Items } from '@/Services/common/cart'
 import { RootState } from '@/Store/store'
 import { setCart } from '@/utils/CartSlice'
 import Image from 'next/image'
-import React , {useState} from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -23,37 +24,57 @@ type Data = {
         email: string,
         _id: string,
     },
-    _id: string
+    _id: string,
+
 
 
 }
 
+interface userData {
+    email: String,
+    role: String,
+    _id: String,
+    name: String
+}
 
-export default function CartCard({ productID, userID, _id   }: Data) {
-    const { mutate } = useSWRConfig();
-    const dispatch  = useDispatch();
+
+export default function CartCard({ productID, userID, _id }: Data) {
+    const dispatch = useDispatch();
     const [qnt, setQnt] = useState(1)
-    const cart  =  useSelector((state : RootState) => state.Cart.cart) as Data[] | null
+    const Router  = useRouter();
+    const user = useSelector((state: RootState) => state.User.userData) as userData | null
+    const cart = useSelector((state: RootState) => state.Cart.cart) as Data[] | null
 
     const handleDeleteCartItem = async () => {
         const res = await delete_a_cart_item(_id)
         if (res?.success) {
-            mutate('/getCartItemForUsers')
+            fetchCartData();
             return toast.success(res?.message)
         }
         return toast.error(res?.message)
     }
 
-    
+
+    const fetchCartData = async () => {
+        if (!user?._id) return Router.push('/')
+        const cartData = await get_all_cart_Items(user?._id)
+        if (cartData?.success) {
+            dispatch(setCart(cartData?.data))
+        } else {
+            toast.error(cartData?.message)
+        }
+    }
+
+
 
     const handleIncrement = () => {
-        const newCart = cart?.map((item : Data) => {
-            if(item._id === _id){
+        const newCart = cart?.map((item: Data) => {
+            if (item._id === _id) {
                 return {
                     ...item,
-                    productID : {
+                    productID: {
                         ...item.productID,
-                        productQuantity : Number(item.productID.productQuantity) + 1
+                        productQuantity: Number(item.productID.productQuantity) + 1
                     }
                 }
             }
@@ -72,13 +93,13 @@ export default function CartCard({ productID, userID, _id   }: Data) {
 
 
     const handleDecrement = () => {
-        const newCart = cart?.map((item : Data) => {
-            if(item._id === _id){
+        const newCart = cart?.map((item: Data) => {
+            if (item._id === _id) {
                 return {
                     ...item,
-                    productID : {
+                    productID: {
                         ...item.productID,
-                        productQuantity : Number(item.productID.productQuantity) + 1
+                        productQuantity: Number(item.productID.productQuantity) + 1
                     }
                 }
             }

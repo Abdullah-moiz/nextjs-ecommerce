@@ -16,7 +16,7 @@ export default function AdminNavbar() {
     const handleLogout = () => {
         Cookies.remove('token');
         localStorage.clear();
-        router.push('/')
+        location.reload();
     }
 
     return (
@@ -30,8 +30,8 @@ export default function AdminNavbar() {
                         <li onClick={() => dispatch(setNavActive('Base'))}><button >Homepage</button></li>
                         <li onClick={() => dispatch(setNavActive('activeCategories'))}><button >Categories</button></li>
                         <li onClick={() => dispatch(setNavActive('activeProducts'))}><button >Products</button></li>
-                        <li ><Link href={'/product/add-product'}>Add Products</Link></li>
-                        <li><Link href={'/category/add-category'}>Add Category</Link></li>
+                        <li ><Link href={"/product/add-product"}>Add Products</Link></li>
+                        <li><Link href={"/category/add-category"}>Add Category</Link></li>
                         <li><Link href={"/Dashboard"}>Pending orders</Link></li>
                         <li><Link href={"/Dashboard"}>Completed orders</Link></li>
                     </ul>
