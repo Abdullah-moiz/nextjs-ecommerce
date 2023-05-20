@@ -99,7 +99,7 @@ export default function CartCard({ productID, userID, _id }: Data) {
                     ...item,
                     productID: {
                         ...item.productID,
-                        productQuantity: Number(item.productID.productQuantity) + 1
+                        productQuantity: Number(item.productID.productQuantity) - 1
                     }
                 }
             }
