@@ -29,7 +29,7 @@ type Data = {
         productPrice: String,
         _id: string,
         productImage: string,
-        productQuantity: string,
+        productQuantity: number,
     }
     userID: {
         email: string,
@@ -122,10 +122,11 @@ export default function Page() {
                 }
             </div>
             <div className='flex px-4 items-end justify-center flex-col'>
-                <h1 className='py-2 px-2 mb-2 text-lg border-b border-orange-600'>Total Price Rs{totalPrice || 0}</h1>
-                <button  className='btn'>Checkout</button>
+                <h1 className='py-2 tracking-widest mb-2  border-b px-6 border-orange-600 text-sm  flex flex-col '>  Total Price  <span className='text-xl font-extrabold'>Rs {totalPrice || 0}</span> </h1>
+                <button  className='btn btn-lg'>Checkout</button>
             </div>
             <ToastContainer />
         </div>
     )
 }
+ 

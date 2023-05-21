@@ -18,7 +18,7 @@ type Data = {
         productPrice: String,
         _id: string,
         productImage: string,
-        productQuantity: string,
+        productQuantity: number,
     }
     userID: {
         email: string,
@@ -40,8 +40,8 @@ interface userData {
 
 export default function CartCard({ productID, userID, _id }: Data) {
     const dispatch = useDispatch();
-    const [qnt, setQnt] = useState(1)
-    const Router  = useRouter();
+    const [qnt, setQnt] = useState(productID?.productQuantity)
+    const Router = useRouter();
     const user = useSelector((state: RootState) => state.User.userData) as userData | null
     const cart = useSelector((state: RootState) => state.Cart.cart) as Data[] | null
 
@@ -69,13 +69,16 @@ export default function CartCard({ productID, userID, _id }: Data) {
 
     const handleIncrement = () => {
         const newCart = cart?.map((item: Data) => {
-            if (item._id === _id) {
-                return {
-                    ...item,
-                    productID: {
-                        ...item.productID,
-                        productQuantity: Number(item.productID.productQuantity) + 1
+            if (item?._id === _id) {
+                if (item?.productID.productQuantity > 0) {
+                    return {
+                        ...item,
+                        productID: {
+                            ...item.productID,
+                            productQuantity: Number(item.productID.productQuantity) + 1
+                        }
                     }
+
                 }
             }
             return item
@@ -95,12 +98,15 @@ export default function CartCard({ productID, userID, _id }: Data) {
     const handleDecrement = () => {
         const newCart = cart?.map((item: Data) => {
             if (item._id === _id) {
-                return {
-                    ...item,
-                    productID: {
-                        ...item.productID,
-                        productQuantity: Number(item.productID.productQuantity) - 1
+                if (item?.productID.productQuantity > 1) {
+                    return {
+                        ...item,
+                        productID: {
+                            ...item.productID,
+                            productQuantity: Number(item.productID.productQuantity) - 1
+                        }
                     }
+
                 }
             }
             return item
