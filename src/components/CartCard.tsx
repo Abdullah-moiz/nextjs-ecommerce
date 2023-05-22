@@ -25,7 +25,7 @@ type Data = {
         _id: string,
     },
     _id: string,
-
+    quantity : number,
 
 
 }
@@ -38,9 +38,9 @@ interface userData {
 }
 
 
-export default function CartCard({ productID, userID, _id }: Data) {
+export default function CartCard({ productID, userID, _id , quantity }: Data) {
     const dispatch = useDispatch();
-    const [qnt, setQnt] = useState(productID?.productQuantity)
+    const [qnt, setQnt] = useState(quantity)
     const Router = useRouter();
     const user = useSelector((state: RootState) => state.User.userData) as userData | null
     const cart = useSelector((state: RootState) => state.Cart.cart) as Data[] | null
@@ -70,15 +70,17 @@ export default function CartCard({ productID, userID, _id }: Data) {
     const handleIncrement = () => {
         const newCart = cart?.map((item: Data) => {
             if (item?._id === _id) {
-                if (item?.productID.productQuantity > 0) {
+                if (item?.productID?.productQuantity > item?.quantity) {
                     return {
                         ...item,
-                        productID: {
-                            ...item.productID,
-                            productQuantity: Number(item.productID.productQuantity) + 1
-                        }
+                        quantity: Number(item?.quantity) + 1,
                     }
-
+                }else{
+                    toast.error('Product Quantity is not available')
+                    return {
+                        ...item,
+                        quantity: Number(item?.productID?.productQuantity),
+                    }
                 }
             }
             return item
@@ -89,7 +91,7 @@ export default function CartCard({ productID, userID, _id }: Data) {
             dispatch(setCart(newCart))
         }
         else {
-            setQnt(1)
+            setQnt(quantity)
             dispatch(setCart(newCart))
         }
     }
@@ -98,15 +100,11 @@ export default function CartCard({ productID, userID, _id }: Data) {
     const handleDecrement = () => {
         const newCart = cart?.map((item: Data) => {
             if (item._id === _id) {
-                if (item?.productID.productQuantity > 1) {
+                if (item?.quantity > 1) {
                     return {
                         ...item,
-                        productID: {
-                            ...item.productID,
-                            productQuantity: Number(item.productID.productQuantity) - 1
-                        }
+                        quantity: Number(item.quantity) - 1,
                     }
-
                 }
             }
             return item
@@ -117,7 +115,7 @@ export default function CartCard({ productID, userID, _id }: Data) {
             dispatch(setCart(newCart))
         }
         else {
-            setQnt(1)
+            setQnt(quantity)
             dispatch(setCart(newCart))
         }
     }
@@ -126,7 +124,7 @@ export default function CartCard({ productID, userID, _id }: Data) {
     return (
         <div className='bg-white w-full rounded-xl m-2 border-b flex-col md:flex-row h-72  md:h-40 py-2 px-4 flex justify-around items-center'>
             <Image src={productID?.productImage} alt='no image found' width={100} height={150} className='rounded' />
-            <h3 className='font-semibold text-lg'>$ {productID?.productPrice}</h3>
+            <h3 className='font-semibold text-lg'>Rs {productID?.productPrice}</h3>
             <div className='flex  justify-center items-center'>
                 <button onClick={handleIncrement} className='btn btn-circle dark:text-white  text-xl'>+</button>
                 <p className='mx-2 text-xl'>{qnt}</p>

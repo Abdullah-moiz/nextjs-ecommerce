@@ -36,6 +36,7 @@ type Data = {
         _id: string,
     },
     _id: string,
+    quantity : number,
 }
 
 
@@ -74,7 +75,7 @@ export default function Page() {
 
     function calculateTotalPrice(myCart: Data[]) {
         const totalPrice = myCart?.reduce((acc, item) => {
-            return acc + (Number(item.productID.productQuantity) * Number(item.productID.productPrice));
+            return acc + (Number(item?.quantity) * Number(item?.productID?.productPrice));
         }, 0);
 
         return totalPrice;
@@ -110,23 +111,29 @@ export default function Page() {
                     loading ? <Loading /> :
                         <>
                             {
-                                cart?.map((item: Data) => {
-                                    return <CartCard key={item._id}
-                                        productID={item.productID}
-                                        userID={item.userID}
-                                        _id={item._id}
-                                    />
-                                })
+                                cart?.length === 0 ?
+                                    <div className='w-full h-full flex items-center justify-center flex-col'>
+                                        <p className='my-4 mx-2 text-lg font-semibold '>No Item Available in Cart</p>
+                                        <Link href={"/"} className='btn'>Shop Now</Link>
+                                    </div>
+                                    :
+                                    cart?.map((item: Data) => {
+                                        return <CartCard key={item?._id}
+                                            productID={item?.productID}
+                                            userID={item?.userID}
+                                            _id={item?._id}
+                                            quantity={item?.quantity}
+                                        />
+                                    })
                             }
                         </>
                 }
             </div>
             <div className='flex px-4 items-end justify-center flex-col'>
                 <h1 className='py-2 tracking-widest mb-2  border-b px-6 border-orange-600 text-sm  flex flex-col '>  Total Price  <span className='text-xl font-extrabold'>Rs {totalPrice || 0}</span> </h1>
-                <button  className='btn btn-lg'>Checkout</button>
+                <button className='btn btn-lg'>Checkout</button>
             </div>
             <ToastContainer />
         </div>
     )
 }
- 

@@ -6,7 +6,7 @@ interface Product {
     productPrice: string;
     _id: string;
     productImage: string;
-    productQuantity: string;
+    productQuantity: number;
 }
 
 interface User {
@@ -39,7 +39,7 @@ export const cartSlice = createSlice({
         setCart: (state, action) => {
             state.cart =  action.payload
         },
-        setTotalPrice  : (state , action) => {
+        setTotalPrice: (state, action) => {
             state.total = action.payload
         }
     },

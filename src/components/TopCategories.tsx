@@ -23,7 +23,7 @@ export default function TopCategories() {
     const filteredCategories = catData?.slice(0, 3)
 
     return (
-        <div className='w-full bg-gray-50  flex items-center flex-col justify-start'>
+        <div id='my-Categories' className='w-full bg-gray-50  flex items-center flex-col justify-start'>
             <div className='flex items-center justify-center px-2 py-2 mb-2'>
                 <h1 className='py-2 px-4 border-x-2 border-x-orange-500 text-black font-semibold text-2xl '>Top Categories</h1>
             </div>
