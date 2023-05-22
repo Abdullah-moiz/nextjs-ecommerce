@@ -41,6 +41,7 @@
 - Add product to cart ✔
 - Remove Product from cart ✔
 - Increase Decrease cart Item  Quantity ✔
+- Alert if InStock Quantity isn't Available ✔
 - Bookmark favourite Product (TODO)
 - remove product from bookmark (TODO)
 - Order a Product (TODO)
@@ -125,6 +126,9 @@ Install my-project with npm
 
 #### Cart Page 
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/23b08511-0e6e-41c1-8b9d-7f72b5b65952)
+
+#### Alert IF Item Quantity isn't available in stock 
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/3a129a57-2df3-440a-9b1c-5c43348027f5)
 
 
 
