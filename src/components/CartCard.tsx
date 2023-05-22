@@ -127,7 +127,7 @@ export default function CartCard({ productID, userID, _id , quantity }: Data) {
             <h3 className='font-semibold text-lg'>Rs {productID?.productPrice}</h3>
             <div className='flex  justify-center items-center'>
                 <button onClick={handleIncrement} className='btn btn-circle dark:text-white  text-xl'>+</button>
-                <p className='mx-2 text-xl'>{qnt}</p>
+                <p className='mx-2 text-xl'>{quantity}</p>
                 <button onClick={handleDecrement} className='btn btn-circle dark:text-white  text-xl'>-</button>
             </div>
             <AiFillDelete onClick={handleDeleteCartItem} className="text-red-500 text-2xl cursor-pointer " />
