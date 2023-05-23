@@ -23,7 +23,7 @@ export default function CategoryCard({ categoryDescription, categoryImage, categ
             </div>
             <div className="card-body">
                 <h2 className="card-title mb-1">{categoryName} </h2>
-                <button className='btn btn-wide mt-2' >View Products</button>
+                <button className='btn text-white tracking-widest btn-wide mt-2' >View Products</button>
             </div>
         </div>
     )

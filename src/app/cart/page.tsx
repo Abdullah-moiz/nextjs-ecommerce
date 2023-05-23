@@ -114,7 +114,7 @@ export default function Page() {
                                 cart?.length === 0 ?
                                     <div className='w-full h-full flex items-center justify-center flex-col'>
                                         <p className='my-4 mx-2 text-lg font-semibold '>No Item Available in Cart</p>
-                                        <Link href={"/"} className='btn'>Shop Now</Link>
+                                        <Link href={"/"} className='btn text-white'>Shop Now</Link>
                                     </div>
                                     :
                                     cart?.map((item: Data) => {
@@ -131,7 +131,7 @@ export default function Page() {
             </div>
             <div className='flex px-4 items-end justify-center flex-col'>
                 <h1 className='py-2 tracking-widest mb-2  border-b px-6 border-orange-600 text-sm  flex flex-col '>  Total Price  <span className='text-xl font-extrabold'>Rs {totalPrice || 0}</span> </h1>
-                <button className='btn btn-lg'>Checkout</button>
+                <button className='btn text-white'>Checkout</button>
             </div>
             <ToastContainer />
         </div>
