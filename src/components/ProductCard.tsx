@@ -1,3 +1,4 @@
+import { bookmark_product } from '@/Services/common/bookmark';
 import { add_to_cart } from '@/Services/common/cart';
 import { RootState } from '@/Store/store';
 import { setUserData } from '@/utils/UserDataSlice';
@@ -47,6 +48,17 @@ export default function ProductCard({ productName, productFeatured, productImage
     }
 
 
+    const AddToBookmark  =  async () => {
+        const finalData = { productID: _id, userID: user?._id }
+        const res = await bookmark_product(finalData);
+        if (res?.success) {
+            toast.success(res?.message);
+        } else {
+            toast.error(res?.message)
+        }
+    }
+
+
     return (
         <div  className="card text-black cursor-pointer card-compact m-3 w-80 bg-white shadow-xl relative">
             <div onClick={() => router.push(`/product/product-detail/${_id}`)} className='w-full rounded relative h-60'>
@@ -58,7 +70,7 @@ export default function ProductCard({ productName, productFeatured, productImage
                 <p className='font-semibold' onClick={() => router.push(`/product/product-detail/${_id}`)}>{`Rs ${productPrice}`}</p>
                 <div className="card-actions justify-end z-20">
                     <button onClick={AddToCart} className="btn  btn-circle btn-ghost "><BsCartPlus className='text-2xl text-orange-600 font-semibold' /></button>
-                    <button className="btn btn-circle btn-ghost absolute top-0 right-0 "><BsFillBookmarkCheckFill className='text-2xl text-orange-600 font-semibold' /></button>
+                    <button onClick={AddToBookmark} className="btn btn-circle btn-ghost absolute top-0 right-0 "><BsFillBookmarkCheckFill className='text-2xl text-orange-600 font-semibold' /></button>
                 </div>
             </div>
         </div>

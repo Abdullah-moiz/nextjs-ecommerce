@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { BiCartAdd } from 'react-icons/bi'
 import { RiBookMarkFill } from 'react-icons/ri'
-import {DiCodeigniter} from 'react-icons/di'
+import { DiCodeigniter } from 'react-icons/di'
 import useSWR from 'swr'
 import { ToastContainer, toast } from 'react-toastify'
 import { get_product_by_id } from '@/Services/Admin/product'
@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/Store/store'
 import { add_to_cart } from '@/Services/common/cart'
 import { setUserData } from '@/utils/UserDataSlice'
+import { bookmark_product } from '@/Services/common/bookmark'
 
 
 interface pageParam {
@@ -76,6 +77,16 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
     }
 
 
+    const AddToBookmark = async () => {
+        const finalData = { productID: params.id, userID: user?._id }
+        const res = await bookmark_product(finalData);
+        if (res?.success) {
+            toast.success(res?.message);
+        } else {
+            toast.error(res?.message)
+        }
+    }
+
 
     return (
         <div className='w-full h-full dark:text-black lg:h-screen bg-gray-200 py-4 px-2'>
@@ -127,7 +138,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
                                 <h1 className='text-3xl font-semibold text-black py-2'>$ {`${prodData?.productPrice}`}</h1>
                                 <div className='w-full py-2 lg:flex-row flex-col flex '>
                                     <button onClick={AddToCart} className='btn m-2 lg:w-52 h-10 btn-outline btn-success flex items-center justify-center'> <BiCartAdd className='text-3xl mx-2' /> Add to Cart</button>
-                                    <button className='btn m-2  lg:w-52 h-10 btn-outline btn-success flex items-center justify-center'> <RiBookMarkFill className='text-3xl mx-2' />Bookmark</button>
+                                    <button onClick={AddToBookmark} className='btn m-2  lg:w-52 h-10 btn-outline btn-success flex items-center justify-center'> <RiBookMarkFill className='text-3xl mx-2' />Bookmark</button>
                                 </div>
 
                             </div>

@@ -6,7 +6,7 @@ import Loading from '@/app/loading'
 import ProductCard from '@/components/ProductCard'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+import { toast , ToastContainer } from 'react-toastify'
 import useSWR from 'swr'
 
 interface pageParam {
@@ -83,6 +83,7 @@ export default function Page({ params, searchParams }: { params: pageParam, sear
                     isLoading === false && thisProduct ===  undefined || thisProduct?.length <  1 && <p className='text-2xl my-4 text-center font-semibold text-red-400'>No Product Found in this Category</p>
                 }
             </div>
+            <ToastContainer />
         </div>
     )
 }
