@@ -42,8 +42,8 @@
 - Remove Product from cart ✔
 - Increase Decrease cart Item  Quantity ✔
 - Alert if InStock Quantity isn't Available ✔
-- Bookmark favourite Product (TODO)
-- remove product from bookmark (TODO)
+- Bookmark favourite Product ✔
+- remove product from bookmark ✔
 - Order a Product (TODO)
 - track Order Status (TODO)
 
@@ -108,7 +108,7 @@ Install my-project with npm
 
 #### Landing Page 
 
-![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/d343d5ae-0468-427a-b87f-c8da911b235d)
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/a4a21833-3f42-479f-99b8-1dba1b459f1b)
 
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/bb8141aa-9ded-4a77-a653-c86733bd7871)
 
@@ -129,6 +129,18 @@ Install my-project with npm
 
 #### Alert IF Item Quantity isn't available in stock 
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/3a129a57-2df3-440a-9b1c-5c43348027f5)
+
+
+#### Favourite Products
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/a2debeef-585c-4bc5-bd39-4c6680deee7d)
+
+
+#### Delete Favourite Products
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/092ce378-7db0-4119-8130-65f5330cd689)
+
+
+#### Search Favourite Products with product Name
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/39e4d3f6-425c-444f-b316-5b2a2b587434)
 
 
 
