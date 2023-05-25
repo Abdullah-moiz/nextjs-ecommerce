@@ -5,7 +5,9 @@ import { setUserData } from '@/utils/UserDataSlice';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import React from 'react'
-import { BsCartPlus, BsFillBookmarkCheckFill } from 'react-icons/bs'
+import { BsCartPlus } from 'react-icons/bs'
+import { GrFavorite } from 'react-icons/gr'
+import { MdFavorite } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -70,7 +72,7 @@ export default function ProductCard({ productName, productFeatured, productImage
                 <p className='font-semibold' onClick={() => router.push(`/product/product-detail/${_id}`)}>{`Rs ${productPrice}`}</p>
                 <div className="card-actions justify-end z-20">
                     <button onClick={AddToCart} className="btn  btn-circle btn-ghost "><BsCartPlus className='text-2xl text-orange-600 font-semibold' /></button>
-                    <button onClick={AddToBookmark} className="btn btn-circle btn-ghost absolute top-0 right-0 "><BsFillBookmarkCheckFill className='text-2xl text-orange-600 font-semibold' /></button>
+                    <button onClick={AddToBookmark} className="btn btn-circle btn-ghost absolute top-0 right-0 "><MdFavorite className='text-2xl text-orange-600 font-semibold' /></button>
                 </div>
             </div>
         </div>

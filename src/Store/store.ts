@@ -6,6 +6,7 @@ import { AdminReducer } from '@/utils/AdminSlice';
 import { UserReducer } from '@/utils/UserDataSlice';
 import { configureStore } from '@reduxjs/toolkit'
 import { cartReducer } from '@/utils/CartSlice';
+import { bookmarkReducer } from '@/utils/Bookmark';
 
 
 
@@ -15,6 +16,7 @@ export const store = configureStore({
         AdminNav : AdminNavReducer,
         Admin : AdminReducer,
         Cart : cartReducer,
+        Bookmark : bookmarkReducer,
     },
 })
 
