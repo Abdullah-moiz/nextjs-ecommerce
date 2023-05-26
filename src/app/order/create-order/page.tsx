@@ -26,11 +26,9 @@ export default function page() {
                 </ul>
             </div>
 
-            <div className=''>
+            <div className='w-full h-full '>
 
             </div>
-
-
         </div>
     )
 }
