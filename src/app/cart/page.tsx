@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import Loading from '../loading';
-import { setCart } from '@/utils/CartSlice';
+import { setCart, setTotalPrice } from '@/utils/CartSlice';
 
 
 
@@ -82,7 +82,7 @@ export default function Page() {
     }
 
     const totalPrice = calculateTotalPrice(cart as Data[])
-
+    if(totalPrice) dispatch(setTotalPrice(totalPrice));
 
 
 
@@ -105,11 +105,12 @@ export default function Page() {
                     </li>
                 </ul>
             </div>
-            <div className='w-full h-4/6  flex items-start  flex-wrap overflow-auto '>
+            <div className='w-full h-4/6  flex items-start  flex-wrap overflow-y-auto '>
 
                 {
                     loading ? <Loading /> :
                         <>
+                            
                             {
                                 cart?.length === 0 ?
                                     <div className='w-full h-full flex items-center justify-center flex-col'>
@@ -131,7 +132,7 @@ export default function Page() {
             </div>
             <div className='flex px-4 items-end justify-center flex-col'>
                 <h1 className='py-2 tracking-widest mb-2  border-b px-6 border-orange-600 text-sm  flex flex-col '>  Total Price  <span className='text-xl font-extrabold'>Rs {totalPrice || 0}</span> </h1>
-                <button className='btn text-white'>Checkout</button>
+                <Link href={"/order/create-order"} className='btn text-white'>Checkout</Link>
             </div>
             <ToastContainer />
         </div>
