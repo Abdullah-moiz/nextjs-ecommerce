@@ -53,7 +53,7 @@ type Data = {
 
 
 
-export default function page() {
+export default function Page() {
 
 
     const [loader, setLoader] = useState(false)
