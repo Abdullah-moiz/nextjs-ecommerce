@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import User from "./User";
+import Product from "./Product";
+
 
 const OrderSchema = new mongoose.Schema({
     user: {
@@ -11,7 +14,7 @@ const OrderSchema = new mongoose.Schema({
             qty: { type: Number, required: true },
             product: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Product",
+                ref: "Products",
             },
 
         }
@@ -23,7 +26,7 @@ const OrderSchema = new mongoose.Schema({
         postalCode: { type: Number, required: true },
         country: { type: String, required: true },
     },
-    paymentMethod: { type: String, required: true },
+    paymentMethod: { type: String, required: true , default : "Paypal" },
     paymentResult: {
         id: String,
         status: String,

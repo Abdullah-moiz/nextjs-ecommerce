@@ -15,6 +15,7 @@ import CartCard from '@/components/CartCard'
 import { get_all_cart_Items } from '@/Services/common/cart'
 import { setCart } from '@/utils/CartSlice'
 import { setNavActive } from '@/utils/AdminNavSlice'
+import { create_a_new_order } from '@/Services/common/order'
 
 
 
@@ -106,7 +107,45 @@ export default function Page() {
     const onSubmit: SubmitHandler<Inputs> = async data => {
         setLoader(true)
 
-        const finalData = 'hello'
+        const finalData = {
+            user : user?._id,
+            orderItems : cartData?.map(item => {
+                return {
+                    product: item?.productID?._id,
+                    qty: item?.quantity
+                }
+            }),
+            shippingAddress : {
+                fullName: data?.fullName,
+                address: data?.address,
+                city: data?.city,
+                postalCode: data?.postalCode,
+                country: data?.country,
+            },
+            paymentMethod : 'PayPal',
+            itemsPrice : totalPrice,
+            taxPrice : 100,
+            shippingPrice : 500,
+            totalPrice : totalPrice + 100 + 500,
+            isPaid : true,
+            paidAt : new Date(),
+            isDelivered : false,
+            deliveredAt : new Date(),
+        }
+
+
+        const res =  await create_a_new_order(finalData);
+        if(res?.success){
+            toast.success(res?.message)
+            setTimeout(() => {
+                Router.push('/')
+            } , 1000)
+            setLoader(false)
+        }else{
+            toast.error(res?.message)
+            setLoader(false)
+        }
+
     }
 
 
@@ -137,7 +176,7 @@ export default function Page() {
                 </ul>
             </div>
             <div className='w-full h-20 my-2 text-center'>
-                <h1 className='text-2xl py-2 dark:text-black'>Order Now</h1>
+                <h1 className='text-2xl py-2 dark:text-black'>Your Order</h1>
             </div>
 
 
@@ -209,7 +248,7 @@ export default function Page() {
                                 <label className="label">
                                     <span className="label-text">City</span>
                                 </label>
-                                <textarea  {...register("city", { required: true })} className="textarea textarea-bordered h-24" placeholder="Description"></textarea>
+                                <input  {...register("city", { required: true })} type="text" className="file-input file-input-bordered w-full " />
                                 {errors.city && <span className='text-red-500 text-xs mt-2'>This field is required</span>}
 
                             </div>
@@ -218,15 +257,15 @@ export default function Page() {
                                     <span className="label-text">Postal Code</span>
                                 </label>
                                 <input  {...register("postalCode", { required: true })} type="number" className="file-input file-input-bordered w-full " />
-                                {errors.postalCode && <span className='text-red-500 text-xs mt-2'>This field is required and the image must be less than or equal to 1MB.</span>}
+                                {errors.postalCode &&  <span className='text-red-500 text-xs mt-2'>This field is required</span>}
 
                             </div>
                             <div className="form-control w-full ">
                                 <label className="label">
                                     <span className="label-text">Country</span>
                                 </label>
-                                <input  {...register("country", { required: true })} type="number" className="file-input file-input-bordered w-full " />
-                                {errors.country && <span className='text-red-500 text-xs mt-2'>This field is required and the image must be less than or equal to 1MB.</span>}
+                                <input  {...register("country", { required: true })} type="text" className="file-input file-input-bordered w-full " />
+                                {errors.country &&  <span className='text-red-500 text-xs mt-2'>This field is required</span>}
 
                             </div>
 
