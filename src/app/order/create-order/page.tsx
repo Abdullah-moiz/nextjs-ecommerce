@@ -9,9 +9,12 @@ import { toast, ToastContainer } from 'react-toastify'
 import { useForm, SubmitHandler } from "react-hook-form";
 import { add_new_category } from '@/Services/Admin/category'
 import { TailSpin } from 'react-loader-spinner'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/Store/store'
 import CartCard from '@/components/CartCard'
+import { get_all_cart_Items } from '@/Services/common/cart'
+import { setCart } from '@/utils/CartSlice'
+import { setNavActive } from '@/utils/AdminNavSlice'
 
 
 
@@ -58,20 +61,42 @@ export default function Page() {
 
     const [loader, setLoader] = useState(false)
     const Router = useRouter();
-
+    const dispatch = useDispatch();
+    const user = useSelector((state: RootState) => state.User.userData) as userData | null
     const cartData = useSelector((state: RootState) => state.Cart.cart) as Data[] | null;
-    const totalPrice = useSelector((state: RootState) => state.Cart.total) as number
+    const [loading, setLoading] = useState(true)
+
+
+    useEffect(() => {
+        if (!Cookies.get('token') || user === null) {
+            Router.push('/')
+        }
+        dispatch(setNavActive('Base'))
+    }, [dispatch, Router])
 
     useEffect(() => {
         toast.warning("This is Dummy Website Don't add your Origial Details Here !")
     }, [])
 
-    useEffect(() => {
-        if (!Cookies.get('token')) {
-            Router.push('/')
-        }
+   
+  
 
-    }, [Router])
+
+
+    useEffect(() => {
+        fetchCartData();
+    }, [])
+
+    const fetchCartData = async () => {
+        if (!user?._id) return Router.push('/')
+        const cartData = await get_all_cart_Items(user?._id)
+        if (cartData?.success) {
+            dispatch(setCart(cartData?.data))
+        } else {
+            toast.error(cartData?.message)
+        }
+        setLoading(false)
+    }
 
 
     const { register, formState: { errors }, handleSubmit } = useForm<Inputs>({
@@ -84,20 +109,25 @@ export default function Page() {
         const finalData = 'hello'
     }
 
+
+    function calculateTotalPrice(myCart: Data[]) {
+        const totalPrice = myCart?.reduce((acc, item) => {
+            return acc + (Number(item?.quantity) * Number(item?.productID?.productPrice));
+        }, 0);
+
+        return totalPrice;
+    }
+
+    const totalPrice = calculateTotalPrice(cartData as Data[])
+
     return (
-        <div className='w-full h-full bg-gray-50'>
+        <div className='w-full h-full bg-gray-50 px-2'>
             <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
                 <ul className='dark:text-black'>
                     <li>
                         <Link href={"/"}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                             Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={"/cart"}>
-                            <BsCartCheckFill className="w-4 h-4 mr-2 stroke-current" />
-                            Cart
                         </Link>
                     </li>
                     <li>
@@ -112,7 +142,7 @@ export default function Page() {
 
 
             {
-                loader ? (
+                loading || loader ? (
                     <div className='w-full  flex-col h-96 flex items-center justify-center '>
                         <TailSpin
                             height="50"
@@ -124,14 +154,14 @@ export default function Page() {
                             wrapperClass=""
                             visible={true}
                         />
-                        <p className='text-sm mt-2 font-semibold text-orange-500'>Creating Your Order Hold Tight ....</p>
+                        <p className='text-sm mt-2 font-semibold text-orange-500'>Loading Hold Tight ....</p>
                     </div>
                 ) : (
 
                     <div className='w-full  h-full flex-col md:flex-row flex items-start justify-center'>
 
                         <div className='md:w-2/3 w-full px-2 h-full flex-col items-end justify-end flex'>
-                            <div className='w-full overflow-auto h-96'>
+                            <div className='w-full flex flex-col items-center py-2 overflow-auto h-96'>
                                 {
                                     cartData?.length === 0 ?
                                         <div className='w-full h-full flex items-center justify-center flex-col'>
