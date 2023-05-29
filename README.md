@@ -40,7 +40,7 @@
 - view dynamic pages detail with breadcamp ✔
 - Add product to cart ✔
 - Remove Product from cart ✔
-- Increase Decrease cart Item  Quantity ✔
+- Increase Decrease cart Item  Quantity ✔ (IF product Instock Quantity is less then your cart quantity then you are unable to  increase that product Quantity)
 - Alert if InStock Quantity isn't Available ✔
 - Bookmark favourite Product ✔
 - remove product from bookmark ✔
