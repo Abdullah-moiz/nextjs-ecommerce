@@ -45,6 +45,7 @@
 - Bookmark favourite Product ✔
 - remove product from bookmark ✔
 - Order a Product ✔
+- After Creating an Order Product Exists in Cart for current User will be Cleared ✔
 - track Order Status (TODO)
 
 #### Note 
