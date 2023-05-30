@@ -47,6 +47,24 @@ export const delete_a_cart_item = async (id: string) => {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log('Error in deleting Categories (service) =>', error)
+    console.log('Error in deleting cart items (service) =>', error)
   }
 }
+
+
+export const delete_user_cart_item = async (id: string) => {
+  try {
+    const res = await fetch(`/api/common/cart/delete-user-cart-Items?id=${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${Cookies.get('token')}`
+      },
+    })
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log('Error in deleting  user cart Iems (service) =>', error)
+  }
+}
+

@@ -12,7 +12,7 @@ import { TailSpin } from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/Store/store'
 import CartCard from '@/components/CartCard'
-import { get_all_cart_Items } from '@/Services/common/cart'
+import { delete_user_cart_item, get_all_cart_Items } from '@/Services/common/cart'
 import { setCart } from '@/utils/CartSlice'
 import { setNavActive } from '@/utils/AdminNavSlice'
 import { create_a_new_order } from '@/Services/common/order'
@@ -104,6 +104,19 @@ export default function Page() {
         criteriaMode: "all"
     });
 
+
+
+    const DeleteUsersCartItems = async () => {
+        let userID = user?._id as string
+        const res = await delete_user_cart_item(userID)
+        if (res?.success) {
+            toast.success(res?.message)
+            fetchCartData()
+        } else {
+            toast.error(res?.message)
+        }
+    }
+
     const onSubmit: SubmitHandler<Inputs> = async data => {
         setLoader(true)
 
@@ -137,6 +150,7 @@ export default function Page() {
         const res =  await create_a_new_order(finalData);
         if(res?.success){
             toast.success(res?.message)
+            DeleteUsersCartItems();
             setTimeout(() => {
                 Router.push('/')
             } , 1000)
