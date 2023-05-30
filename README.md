@@ -40,11 +40,11 @@
 - view dynamic pages detail with breadcamp ✔
 - Add product to cart ✔
 - Remove Product from cart ✔
-- Increase Decrease cart Item  Quantity ✔
+- Increase Decrease cart Item  Quantity ✔ (IF product Instock Quantity is less then your cart quantity then you are unable to  increase that product Quantity)
 - Alert if InStock Quantity isn't Available ✔
 - Bookmark favourite Product ✔
 - remove product from bookmark ✔
-- Order a Product (TODO)
+- Order a Product ✔
 - track Order Status (TODO)
 
 #### Note 
@@ -141,6 +141,10 @@ Install my-project with npm
 
 #### Search Favourite Products with product Name
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/39e4d3f6-425c-444f-b316-5b2a2b587434)
+
+#### Order a Product
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/a958670a-8d89-411c-af41-901d933920d7)
+
 
 
 
