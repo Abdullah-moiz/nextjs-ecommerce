@@ -7,8 +7,9 @@ import Cookies from 'js-cookie';
 import { RootState } from '@/Store/store';
 import { useSelector } from 'react-redux';
 import { FaCartArrowDown } from 'react-icons/fa';
-import { GrFavorite } from 'react-icons/gr';
+import {CiDeliveryTruck} from 'react-icons/ci'
 import { MdFavorite } from 'react-icons/md';
+
 
 export default function Navbar() {
     const router = useRouter()
@@ -40,7 +41,8 @@ export default function Navbar() {
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow text-black bg-gray-50 rounded-box w-52">
                         <li><Link href={'/'}>Homepage</Link></li>
                         <li><Link href={'/'}>Shop</Link></li>
-                        <li><Link href={'/Dashboard'}>Dashboard</Link></li>
+                        <li><Link href={"/order/view-orders"}>My Orders</Link></li>
+                        <li><Link href={"/Dashboard"}>Dashboard</Link></li>
                     </ul>
                 </div>
             </div>
@@ -53,6 +55,7 @@ export default function Navbar() {
                          <button onClick={handleLogout} className='btn text-white mx-2'>logout</button>
                          <button onClick={() => router.push("/order/create-order")} className='btn btn-circle  mx-2'><FaCartArrowDown className='text-white text-xl' /></button>
                          <button onClick={() => router.push("/bookmark")} className='btn btn-circle  mx-2'><MdFavorite className='text-white text-xl' /></button>
+                         <button onClick={() => router.push("/order/view-orders")} className='btn btn-circle  mx-2'><CiDeliveryTruck className='text-white text-xl' /></button>
                          
                         </div>
                             :

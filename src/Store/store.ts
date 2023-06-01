@@ -7,6 +7,7 @@ import { UserReducer } from '@/utils/UserDataSlice';
 import { configureStore } from '@reduxjs/toolkit'
 import { cartReducer } from '@/utils/CartSlice';
 import { bookmarkReducer } from '@/utils/Bookmark';
+import { OrderReducer } from '@/utils/OrderSlice';
 
 
 
@@ -17,6 +18,7 @@ export const store = configureStore({
         Admin : AdminReducer,
         Cart : cartReducer,
         Bookmark : bookmarkReducer,
+        Order : OrderReducer,
     },
 })
 
