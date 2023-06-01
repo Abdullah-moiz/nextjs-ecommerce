@@ -46,7 +46,8 @@
 - remove product from bookmark ✔
 - Order a Product ✔
 - After Creating an Order Product Exists in Cart for current User will be Cleared ✔
-- track Order Status (TODO)
+- track Order Status ✔
+- View Order Detail (TODO)
 
 #### Note 
 More Functionality will be added with time
@@ -146,6 +147,8 @@ Install my-project with npm
 #### Order a Product
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/a958670a-8d89-411c-af41-901d933920d7)
 
+#### Track Orders
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/8501280b-dbf8-4fdc-abf3-5afb003ac251)
 
 
 
