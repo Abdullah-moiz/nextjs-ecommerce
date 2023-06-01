@@ -151,7 +151,7 @@ Install my-project with npm
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/8501280b-dbf8-4fdc-abf3-5afb003ac251)
 
 
-#### Check order Detaisl
+#### Check order Details
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/139f02be-806f-4d8c-8cba-51948682277a)
 
 
