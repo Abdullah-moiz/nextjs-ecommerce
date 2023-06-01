@@ -34,3 +34,21 @@ export const get_all_orders_of_user = async (id: any) => {
     console.log('Error in getting all orders Item for specific User (service) =>', error)
   }
 }
+
+
+export const get_order_details= async (id: any) => {
+  try {
+    const res = await fetch(`/api/common/order/order-Details?id=${id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${Cookies.get('token')}`
+      }
+    });
+    console.log(res)
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    console.log('Error in getting all orders Item for specific User (service) =>', error)
+  }
+}

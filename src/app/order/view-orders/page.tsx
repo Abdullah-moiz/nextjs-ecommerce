@@ -7,15 +7,9 @@ import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { GrDeliver } from 'react-icons/gr'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
-
-interface userData {
-  email: String,
-  role: String,
-  _id: String,
-  name: String
-}
 
 interface userData {
   email: String,
@@ -50,7 +44,6 @@ export default function Page() {
     if (!user?._id) return Router.push('/')
     const orderData = await get_all_orders_of_user(user?._id)
     if (orderData?.success) {
-      console.log(orderData?.data)
       dispatch(setOrder(orderData?.data))
     } else {
       toast.error(orderData?.message)
@@ -61,7 +54,7 @@ export default function Page() {
 
 
   return (
-    <div className='w-full h-screen px-2 py-2'>
+    <div className='w-full bg-gray-50 h-screen px-2 py-2'>
       <div className="text-sm breadcrumbs  border-b-2 border-b-orange-600">
         <ul className='dark:text-black'>
           <li>
@@ -71,7 +64,7 @@ export default function Page() {
             </Link>
           </li>
           <li>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-2 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <GrDeliver className="w-4 h-4 mr-2 stroke-current" />
             Orders
           </li>
         </ul>

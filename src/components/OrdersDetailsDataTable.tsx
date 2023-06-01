@@ -128,8 +128,8 @@ export default function OrdersDetailsDataTable() {
     {
       name: 'Action',
       cell: (row: Order) => (
- 
-        <button  className=' w-20 py-2 mx-2 text-xs text-green-600 hover:text-white my-2 hover:bg-green-600 border border-green-600 rounded transition-all duration-700'>Details</button>
+
+        <button onClick={() => router.push(`/order/view-orders-details/${row?._id}`)} className=' w-20 py-2 mx-2 text-xs text-green-600 hover:text-white my-2 hover:bg-green-600 border border-green-600 rounded transition-all duration-700'>Details</button>
 
       )
     },
