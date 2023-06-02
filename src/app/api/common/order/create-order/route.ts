@@ -3,6 +3,7 @@ import AuthCheck from "@/middleware/AuthCheck";
 import { NextResponse } from "next/server";
 import Order from "@/model/Order";
 import Joi from "joi";
+import Cart from "@/model/Cart";
 
 
 const createOrderSchema = Joi.object({
@@ -22,8 +23,8 @@ export async function POST(req: Request) {
 
         if (isAuthenticated) {
             const data = await req.json();
-
             console.log(data)
+            
 
             const { user } = data;
 
@@ -36,7 +37,10 @@ export async function POST(req: Request) {
 
             const saveData = await Order.create(data);
 
+            
+
             if (saveData) {
+                const deleteData = await Cart.deleteMany({userID: user});
                 return NextResponse.json({ success: true, message: "Products Are on The way !!" });
             } else {
                 return NextResponse.json({ success: false, message: "Failed to create Order . Please try again!" });
