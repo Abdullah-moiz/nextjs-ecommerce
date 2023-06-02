@@ -32,8 +32,8 @@ export default function AdminNavbar() {
                         <li onClick={() => dispatch(setNavActive('activeProducts'))}><button >Products</button></li>
                         <li ><Link href={"/product/add-product"}>Add Products</Link></li>
                         <li><Link href={"/category/add-category"}>Add Category</Link></li>
-                        <li><Link href={"/Dashboard"}>Pending orders</Link></li>
-                        <li><Link href={"/Dashboard"}>Completed orders</Link></li>
+                        <li onClick={() => dispatch(setNavActive('activePendingOrder'))}><button >Pending orders</button></li>
+                        <li onClick={() => dispatch(setNavActive('activeDeliveredOrder'))}><button >Completed orders</button></li>
                     </ul>
                 </div>
             </div>

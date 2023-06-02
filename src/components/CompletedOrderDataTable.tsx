@@ -1,92 +1,84 @@
+
 "use Client"
 
 import React, { useEffect, useState } from 'react'
 
 import { useSWRConfig } from "swr"
+import { toast } from 'react-toastify';
 import DataTable from 'react-data-table-component';
-import { useSelector } from 'react-redux';
+import Image from 'next/image';
+import Loading from '@/app/loading';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/Store/store';
 import { useRouter } from 'next/navigation';
-
-
-
-
-type ProductData = {
-  _id: string,
-  productName: string,
-  productDescription: string,
-  productImage: string,
-  productSlug: string,
-  productPrice: Number,
-  productQuantity: Number,
-  productFeatured: Boolean,
-  productCategory: {
-    _id: string,
-    categoryName: string,
-    categorySlug: string
-  },
-  createdAt: string;
-  updatedAt: string;
-};
-
+import { delete_a_product } from '@/Services/Admin/product';
+import { delete_a_bookmark_item, get_all_bookmark_items } from '@/Services/common/bookmark';
+import { setBookmark } from '@/utils/Bookmark';
 
 
 interface Order {
-  createdAt: string;
-  deliveredAt: string;
-  isDelivered: boolean;
-  isPaid: boolean;
-  itemsPrice: number;
-  orderItems: {
-    qty: number;
-    product: {
-      createdAt: string;
-      productCategory: string;
-      productDescription: string;
-      productFeatured: boolean;
-      productImage: string;
-      productName: string;
-      productPrice: number;
-      productQuantity: number;
-      productSlug: string;
-      updatedAt: string;
+    createdAt: string;
+    deliveredAt: string;
+    isDelivered: boolean;
+    isPaid: boolean;
+    itemsPrice: number;
+    orderItems: {
+      qty: number;
+      product: {
+        createdAt: string;
+        productCategory: string;
+        productDescription: string;
+        productFeatured: boolean;
+        productImage: string;
+        productName: string;
+        productPrice: number;
+        productQuantity: number;
+        productSlug: string;
+        updatedAt: string;
+        __v: number;
+        _id: string;
+      };
+      _id: string;
+    }[];
+    paidAt: string;
+    paymentMethod: string;
+    shippingAddress: {
+      address: string;
+      city: string;
+      country: string;
+      fullName: string;
+      postalCode: number;
+    };
+    shippingPrice: number;
+    taxPrice: number;
+    totalPrice: number;
+    updatedAt: string;
+    user: {
+      email: string;
+      name: string;
+      password: string;
+      role: string;
       __v: number;
       _id: string;
     };
-    _id: string;
-  }[];
-  paidAt: string;
-  paymentMethod: string;
-  shippingAddress: {
-    address: string;
-    city: string;
-    country: string;
-    fullName: string;
-    postalCode: number;
-  };
-  shippingPrice: number;
-  taxPrice: number;
-  totalPrice: number;
-  updatedAt: string;
-  user: {
-    email: string;
-    name: string;
-    password: string;
-    role: string;
     __v: number;
     _id: string;
-  };
-  __v: number;
-  _id: string;
+  }
+
+
+interface userData {
+    email: String,
+    role: String,
+    _id: String,
+    name: String
 }
 
 
-
-export default function OrdersDetailsDataTable() {
-  const { mutate } = useSWRConfig()
+export default function CompletedOrderDataTable() {
+    const { mutate } = useSWRConfig()
   const router = useRouter();
   const [orderData, setOrderData] = useState<Order[] | []>([]);
-  const data = useSelector((state: RootState) => state.Order.order) as Order[] | [];
+  const data = useSelector((state: RootState) => state.Admin.Order) as Order[] | [];
   const [search, setSearch] = useState('');
   const [filteredData, setFilteredData] = useState<Order[] | []>([]);
 

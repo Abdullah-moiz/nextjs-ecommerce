@@ -14,6 +14,8 @@ export default function  GettingDatasLength() {
 
   const prodData = useSelector((state: RootState) => state.Admin.product);
 
+  const orderData = useSelector((state: RootState) => state.Admin.Order);
+
   return [
     
     {
@@ -38,7 +40,7 @@ export default function  GettingDatasLength() {
       icon: "AiOutlineClockCircle",
       color: "text-yellow-600",
       title: "Pending Orders",
-      count: 20,
+      count: orderData?.length || 0,
     },
     {
       icon: "GrCompliance",

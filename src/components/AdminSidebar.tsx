@@ -25,8 +25,9 @@ export default function AdminSidebar() {
                     <li onClick={() => dispatch(setNavActive('activeProducts'))} className='py-3 px-1 mb-3'><button className='flex items-center justify-center'> <GiLoincloth className='mx-2' />  Products</button></li>
                     <li className='py-3 px-1 mb-3'><Link href={'/product/add-product'} className='flex items-center justify-center'> <IoIosAddCircle className='mx-2' /> Add Products</Link></li>
                     <li className='py-3 px-1 mb-3'><Link href={'/category/add-category'} className='flex items-center justify-center'> <IoIosAddCircle className='mx-2' /> Add Category</Link></li>
-                    <li className='py-3 px-1 mb-3'><Link href={'/Dashboard'} className='flex items-center justify-center'> <MdOutlinePendingActions className='mx-2' /> Pending Order</Link></li>
-                    <li className='py-3 px-1 mb-3'><Link href={'/Dashboard'} className='flex items-center justify-center'> <GrCompliance className='mx-2' /> Completed Order</Link></li>
+                    <li  className='py-3 px-1 mb-3' onClick={() => dispatch(setNavActive('activePendingOrder'))}><button className='flex items-center justify-center'> <MdOutlinePendingActions className='mx-2' /> Pending orders</button></li>
+                    <li  className='py-3 px-1 mb-3' onClick={() => dispatch(setNavActive('activeDeliveredOrder'))}><button className='flex items-center justify-center' > <GrCompliance className='mx-2' />Completed orders</button></li>
+
                 </ul>
             </div>
 

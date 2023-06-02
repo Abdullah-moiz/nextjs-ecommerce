@@ -9,10 +9,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import useSWR from 'swr'
 import { get_all_categories } from '@/Services/Admin/category';
 import { useDispatch } from 'react-redux';
-import { setCatLoading, setCategoryData, setProdLoading, setProductData } from '@/utils/AdminSlice';
+import { setCatLoading, setCategoryData, setOrderData, setProdLoading, setProductData } from '@/utils/AdminSlice';
 import Loading from '../loading';
 import { setNavActive } from '@/utils/AdminNavSlice';
 import { get_all_products } from '@/Services/Admin/product';
+import { get_all_orders } from '@/Services/Admin/order';
 
 
 interface userData {
@@ -42,14 +43,18 @@ export default function Dashboard() {
   if (categoryData?.success !== true) toast.error(categoryData?.message)
   const { data: productData, isLoading: productLoading } = useSWR('/gettingAllProductsFOrAdmin', get_all_products)
   if (productData?.success !== true) toast.error(productData?.message)
+  const {data : orderData, isLoading : orderLoading} = useSWR('/gettingAllOrdersForAdmin', get_all_orders)
+  if (orderData?.success !== true) toast.error(orderData?.message)
 
-
+  console.log(orderData?.data)
   useEffect(() => {
     dispatch(setCategoryData(categoryData?.data))
     dispatch(setCatLoading(categoryLoading))
     dispatch(setProductData(productData?.data))
     dispatch(setProdLoading(productLoading))
-  }, [categoryData, dispatch, categoryLoading, productData, productLoading])
+    dispatch(setOrderData(orderData?.data))
+    dispatch(setCatLoading(orderLoading))
+  }, [categoryData, dispatch, categoryLoading, productData, productLoading , orderData , orderLoading])
 
 
 
