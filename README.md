@@ -109,6 +109,14 @@ Install my-project with npm
 #### Admin Search category with category Name
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/600bb84b-9401-48e9-90b8-44891f794b81)
 
+#### Pending Order List
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/66f07720-dc2f-4a05-98fc-d9c422665dc9)
+
+
+#### Completed Order List
+![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/278e33ae-b7bb-4cf2-8ed3-18e06d1f368c)
+
+
 
 #### Landing Page 
 
@@ -155,6 +163,7 @@ Install my-project with npm
 
 #### Check order Details
 ![image](https://github.com/Abdullah-moiz/nextjs-ecommerce/assets/90745903/139f02be-806f-4d8c-8cba-51948682277a)
+
 
 
 
