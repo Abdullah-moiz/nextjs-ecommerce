@@ -32,7 +32,9 @@
  - Delete category ✔
  - search category By name ✔
  - search product by category Name ✔
- - Handle Order Delivery  (TODO)
+ - Handle Order Delivery  ✔
+ - Pending Order  List ✔
+ - Completed Order List ✔
 
 # Customer
 - View Product & Category ✔
