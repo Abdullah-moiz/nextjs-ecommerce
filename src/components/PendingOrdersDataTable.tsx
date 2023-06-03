@@ -85,7 +85,8 @@ export default function PendingOrdersDataTable() {
 
 
   useEffect(() => {
-    setOrderData(data)
+    const filterPendingOrder =  data?.filter((item) => item?.isDelivered === false)
+    setOrderData(filterPendingOrder)
   }, [data])
 
   useEffect(() => {
@@ -95,7 +96,6 @@ export default function PendingOrdersDataTable() {
 
 
   const updateOrderStatus =  async (id: string) => {
-    console.log(id)
     const res =  await update_order_status(id);
     if(res?.success){
       toast.success(res?.message)

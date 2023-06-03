@@ -84,7 +84,8 @@ export default function CompletedOrderDataTable() {
 
 
   useEffect(() => {
-    setOrderData(data)
+    const filteredCompletedOrder =  data?.filter((item) => item?.isDelivered === true)
+    setOrderData(filteredCompletedOrder)
   }, [data])
 
   useEffect(() => {
