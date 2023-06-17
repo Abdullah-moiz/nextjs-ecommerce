@@ -13,7 +13,6 @@ const schema = Joi.object({
 
 
 export  async function POST (req : Request)  {
-    console.log('i got hit')
     await connectDB();
 
     
@@ -32,7 +31,7 @@ export  async function POST (req : Request)  {
 
         else {
             const hashedPassword = await hash(password, 12)
-            const createUser = await User.create({ email, name, password: hashedPassword });
+            const createUser = await User.create({ email, name, password: hashedPassword , role : 'user' });
             if(createUser) return NextResponse.json({ success: true, message: "Account created successfully" });
         }
     } catch (error) {
