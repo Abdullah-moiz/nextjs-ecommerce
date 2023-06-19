@@ -22,7 +22,7 @@ export default function Home() {
   const categoryLoading = useSelector((state: RootState) => state.Admin.catLoading)
   const productLoading = useSelector((state: RootState) => state.Admin.productLoading)
   const [loading, setLoading] = useState(true)
-
+  const [ratio, setRatio] = useState(16/9) 
   useEffect(() => {
     toast.warning("Application is under development , some features may not work properly")
     toast.warning('This is a demo website, you can not buy anything from here')
@@ -69,13 +69,13 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
+      <Hero setRatio={setRatio} />
       {
         loading ? <Loading /> :
           <>
 
             <TopCategories />
-            <FeaturedProduct />
+            <FeaturedProduct  />
             <Footer />
 
           </>
