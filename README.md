@@ -1,7 +1,5 @@
 
- - Admin Dashboard is only accessible to you if you clone it you can't Signup for Admin Account I have added dummy Product and categories 
-
-
+ - Admin Dashboard is only accessible to you if you clone it you can't Signup for Admin Account.
 #### multi User Login System
 - SignIn / SignUp ✔
 - Forget Password ✔
