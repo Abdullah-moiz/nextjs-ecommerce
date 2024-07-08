@@ -2,6 +2,8 @@ import connectDB from "@/DB/connectDB";
 import { NextResponse } from "next/server";
 import Order from "@/model/Order";
 import AuthCheck from "@/middleware/AuthCheck";
+import Product from "@/model/Product";
+import User from "@/model/User";
 
 export const dynamic = 'force-dynamic'
 
@@ -10,6 +12,10 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
+
+    const registerProductModel =  await Product.init();
+    
+    const registerUserModel =  await User.init();
 
     if (!id) return NextResponse.json({ status: 400, success: false, message: 'Please Login !' });
     const isAuthenticated = await AuthCheck(req);

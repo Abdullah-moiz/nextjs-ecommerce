@@ -2,6 +2,7 @@ import connectDB from "@/DB/connectDB";
 
 import { NextResponse } from "next/server";
 import Product from "@/model/Product";
+import Category from "@/model/Category";
 
 
 export const dynamic = 'force-dynamic'
@@ -11,7 +12,7 @@ export async function GET(req: Request) {
   try {
     
 
-
+    const registerCategoryModel = await Category.init();
 
     const getData = await Product.find({}).populate('productCategory', ' categoryName categorySlug _id')
     if (getData) {

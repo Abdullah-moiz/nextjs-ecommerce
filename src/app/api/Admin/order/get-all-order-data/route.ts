@@ -2,12 +2,18 @@ import connectDB from "@/DB/connectDB";
 import { NextResponse } from "next/server";
 import Order from "@/model/Order";
 import AuthCheck from "@/middleware/AuthCheck";
+import Product from "@/model/Product";
+import User from "@/model/User";
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
   await connectDB();
   try {
+
+    const registerProductModel =  await Product.init();
+    const registerUserModel =  await User.init();
+
     const isAuthenticated = await AuthCheck(req);
 
     if (isAuthenticated === 'admin') {
